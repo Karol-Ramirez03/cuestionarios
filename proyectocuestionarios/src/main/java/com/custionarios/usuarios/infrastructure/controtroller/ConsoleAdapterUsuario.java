@@ -41,8 +41,9 @@ public class ConsoleAdapterUsuario {
                         3. listar todos los usuarios
                         4. buscar usuario por id
                         5. actualizar usuario
+                        6. salir
                         """;
-    Optional<Integer> opcion = Validaciones.mostrarOpciones(menu,1,5);
+    Optional<Integer> opcion = Validaciones.mostrarOpciones(menu,1,6);
 
     if (opcion.isPresent()) {
         int numero = opcion.get();
@@ -161,11 +162,10 @@ public class ConsoleAdapterUsuario {
                 e.printStackTrace();
                 Start();
             }
-                 
-                
                 break;
             case 6:
-                JOptionPane.showMessageDialog(null, "Has seleccionado la Opción 6");
+                break;
+            default:
                 break;
         }
     }
