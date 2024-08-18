@@ -80,7 +80,6 @@ public class UsuarioRepository implements UsuarioService{
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         
         return Optional.empty();
     }

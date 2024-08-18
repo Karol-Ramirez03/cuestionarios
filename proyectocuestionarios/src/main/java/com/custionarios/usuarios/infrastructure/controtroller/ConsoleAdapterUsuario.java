@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 import com.custionarios.funciones.Validaciones;
 import com.custionarios.usuarios.aplicattion.CreateUsuarioUseCase;
@@ -64,10 +66,17 @@ public class ConsoleAdapterUsuario {
 
                 break;
             case 2:
-                String iddel = JOptionPane.showInputDialog(null, "Escriba el id del usuario para eliminar: ");
-                int iddelete = Integer.parseInt(iddel);
-                delUsuario.execute(iddelete);
-                Start();
+                try {
+                    String iddel = JOptionPane.showInputDialog(null, "Escriba el id del usuario para eliminar: ");
+                    int iddelete = Integer.parseInt(iddel);
+                    delUsuario.execute(iddelete);
+                    Start();
+                    
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null,  "problemas en el ingreso de datos,Vuelve a intentarlo");
+                    Start();
+                }
+                
                 break;
             case 3:
                 StringBuilder mensaje = new StringBuilder("Lista de usuarios:\n");
@@ -78,13 +87,23 @@ public class ConsoleAdapterUsuario {
                     boolean habil = usuario.isHabilitado();
                     String password =  usuario.getContrasena();
 
-                    mensaje.append("ID: ").append(id).append(" ")
-                    .append("Nombre: ").append(name).append(" ")
-                    .append("Habilitado: ").append(habil ? "Sí" : "No").append(" ")
-                    .append("Contraseña: ").append(password).append("\n");
+                    mensaje.append("ID: ").append(id).append("\n")
+                    .append("Nombre: ").append(name).append(", ")
+                    .append("Habilitado: ").append(habil ? "Sí" : "No").append(", ")
+                    .append("Contraseña: ").append(password).append("\n\n");
      
                 }
-                JOptionPane.showMessageDialog(null, mensaje);
+                JTextArea textArea = new JTextArea(mensaje.toString());
+                textArea.setEditable(false); // Para que el texto no sea editable
+                textArea.setCaretPosition(1); // Para que comience en la parte superior
+
+                // Crear un JScrollPane y envolver el JTextArea
+                JScrollPane scrollPane = new JScrollPane(textArea);
+                scrollPane.setPreferredSize(new java.awt.Dimension(400, 300)); // Ajustar el tamaño preferido
+
+                // Mostrar el JScrollPane en un JOptionPane
+                JOptionPane.showMessageDialog(null, scrollPane, "Usuarios", JOptionPane.INFORMATION_MESSAGE);
+                
                 Start();
                 break;
             case 4:
