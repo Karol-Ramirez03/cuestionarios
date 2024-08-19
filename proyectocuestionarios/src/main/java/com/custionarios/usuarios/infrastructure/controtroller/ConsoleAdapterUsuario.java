@@ -165,9 +165,15 @@ public class ConsoleAdapterUsuario {
                                 usuarioUpd.setContrasena(JOptionPane.showInputDialog(null, "Ingrese la nuevo contraseña"));
                                 break;
                             case 3:
-                                int habil = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese 1 para habilitado y 0 para desabilitar"));
-                                boolean estado = (habil == 1);
-                                usuarioUpd.setHabilitado(estado);
+                                try {
+                                    int habil = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese 1 para habilitado y 0 para desabilitar"));
+                                    boolean estado = (habil == 1);
+                                    usuarioUpd.setHabilitado(estado);
+                                } catch (Exception e) {
+                                    JOptionPane.showMessageDialog(null,  "problemas en el ingreso de datos,Vuelve a intentarlo");
+                                    Start();
+                                }
+                                
                                 break;
                             case 4:
                                 bandera = false;

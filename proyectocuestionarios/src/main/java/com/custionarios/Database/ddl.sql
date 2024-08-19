@@ -26,8 +26,8 @@ CREATE TABLE usuarios_roles (
 
 CREATE TABLE categorias_catalogo (
     id INT AUTO_INCREMENT,
-    creado_en DATE,
-    actualizado_en DATE,
+    creado_en TIMESTAMP,
+    actualizado_en TIMESTAMP,
     nombre VARCHAR(255),
     CONSTRAINT pk_categorias_catalogo PRIMARY KEY (id)
 );
@@ -44,8 +44,8 @@ CREATE TABLE encuestas (
 CREATE TABLE capitulos (
     id INT AUTO_INCREMENT,
     id_encuesta INT,
-    creado_en DATE,
-    actualizado_en DATE,
+    creado_en TIMESTAMP,
+    actualizado_en TIMESTAMP,
     numero_capitulo VARCHAR(50),
     titulo_capitulo VARCHAR(50),
     CONSTRAINT pk_capitulos PRIMARY KEY (id),
@@ -55,8 +55,8 @@ CREATE TABLE capitulos (
 CREATE TABLE preguntas (
     id INT AUTO_INCREMENT,
     id_capitulo INT,
-    creado_en DATE,
-    actualizado_en DATE,
+    creado_en TIMESTAMP,
+    actualizado_en TIMESTAMP,
     numero_pregunta VARCHAR(10) NOT NULL UNIQUE,
     tipo_respuesta VARCHAR(20),
     comentario_pregunta VARCHAR(255),
@@ -70,8 +70,8 @@ CREATE TABLE opciones_respuesta (
     valor_opcion INT,
     id_categoria_catalogo INT,
     id_pregunta INT,
-    creado_en DATE,
-    actualizado_en DATE,
+    creado_en TIMESTAMP,
+    actualizado_en TIMESTAMP,
     id_opcion_padre INT,
     tipo_componente_html VARCHAR(30),
     comentario_respuesta TEXT,
@@ -85,8 +85,8 @@ CREATE TABLE opciones_respuesta (
 CREATE TABLE subopciones_respuesta (
     id INT AUTO_INCREMENT,
     numero_subopcion INT,
-    creado_en DATE,
-    actualizado_en DATE,
+    creado_en TIMESTAMP,
+    actualizado_en TIMESTAMP,
     id_opcion_respuesta INT,
     componente_html VARCHAR(255),
     texto_subopcion VARCHAR(255),

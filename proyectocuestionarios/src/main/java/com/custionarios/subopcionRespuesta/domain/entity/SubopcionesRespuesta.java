@@ -1,18 +1,33 @@
 package com.custionarios.subopcionRespuesta.domain.entity;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
-public class SubopcionesRespuesta {
+public class SubOpcionesRespuesta {
     private int id;
     private int numeroSubopcion;
-    private Date creadoEn;
-    private Date actualizadoEn;
+    private Timestamp creadoEn;
+    private Timestamp actualizadoEn;
     private int idOpcionRespuesta;
     private String componenteHtml;
     private String textoSubopcion;
 
-    
-    public SubopcionesRespuesta(int id, int numeroSubopcion, Date creadoEn, Date actualizadoEn, int idOpcionRespuesta,
+
+    public SubOpcionesRespuesta() {
+    }
+
+
+
+    public SubOpcionesRespuesta(int numeroSubopcion, int idOpcionRespuesta, String componenteHtml,
+            String textoSubopcion) {
+        this.numeroSubopcion = numeroSubopcion;
+        this.idOpcionRespuesta = idOpcionRespuesta;
+        this.componenteHtml = componenteHtml;
+        this.textoSubopcion = textoSubopcion;
+    }
+
+
+
+    public SubOpcionesRespuesta(int id, int numeroSubopcion, Timestamp creadoEn, Timestamp actualizadoEn, int idOpcionRespuesta,
             String componenteHtml, String textoSubopcion) {
         this.id = id;
         this.numeroSubopcion = numeroSubopcion;
@@ -44,22 +59,22 @@ public class SubopcionesRespuesta {
     }
 
 
-    public Date getCreadoEn() {
+    public Timestamp getCreadoEn() {
         return creadoEn;
     }
 
 
-    public void setCreadoEn(Date creadoEn) {
+    public void setCreadoEn(Timestamp creadoEn) {
         this.creadoEn = creadoEn;
     }
 
 
-    public Date getActualizadoEn() {
+    public Timestamp getActualizadoEn() {
         return actualizadoEn;
     }
 
 
-    public void setActualizadoEn(Date actualizadoEn) {
+    public void setActualizadoEn(Timestamp actualizadoEn) {
         this.actualizadoEn = actualizadoEn;
     }
 
