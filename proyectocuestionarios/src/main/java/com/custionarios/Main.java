@@ -1,5 +1,8 @@
 package com.custionarios;
 
+import com.custionarios.encuestas.infrastructure.controller.ConsoleAdapterEncuesta;
+import com.custionarios.opcionesRespuestas.infrastructure.controller.ConsoleAdapterOpcionesRespuesta;
+import com.custionarios.preguntas.infrastructure.controller.ConsoleAdapterPregunta;
 import com.custionarios.respuesta.infrastructure.controller.ConsoleAdapterRespuesta;
 import com.custionarios.roles.infrastructure.controller.ConsoleAdapterRoles;
 import com.custionarios.subopcionRespuesta.infrastruture.controller.ConsoleAdapterSubOpcionesRespuesta;
@@ -21,7 +24,16 @@ public class Main {
         // ConsoleAdapterSubOpcionesRespuesta casor = new ConsoleAdapterSubOpcionesRespuesta();
         // casor.Start();
 
-        ConsoleAdapterRespuesta menuRespuesta = new ConsoleAdapterRespuesta();
-        menuRespuesta.Start();
+        // ConsoleAdapterRespuesta menuRespuesta = new ConsoleAdapterRespuesta();
+        // menuRespuesta.Start();
+
+        // ConsoleAdapterPregunta menuPregunta = new ConsoleAdapterPregunta();
+        // menuPregunta.Start();
+
+        // ConsoleAdapterOpcionesRespuesta menuOpcionesRespuesta = new ConsoleAdapterOpcionesRespuesta();
+        // menuOpcionesRespuesta.Start();
+
+        ConsoleAdapterEncuesta menuEncuesta = new ConsoleAdapterEncuesta();
+        menuEncuesta.Start();
     }                      
 }

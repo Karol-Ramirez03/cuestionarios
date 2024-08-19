@@ -1,6 +1,6 @@
 package com.custionarios.preguntas.domain.entity;
 
-import com.google.protobuf.Timestamp;
+import java.sql.Timestamp;
 
 public class Pregunta {
     private int id;
@@ -12,6 +12,16 @@ public class Pregunta {
     private String comentarioPregunta;
     private String textoPregunta;
     
+    
+    public Pregunta(int idCapitulo, String numeroPregunta, String tipoRespuesta, String comentarioPregunta,
+            String textoPregunta) {
+        this.idCapitulo = idCapitulo;
+        this.numeroPregunta = numeroPregunta;
+        this.tipoRespuesta = tipoRespuesta;
+        this.comentarioPregunta = comentarioPregunta;
+        this.textoPregunta = textoPregunta;
+    }
+
     public Pregunta(int id, int idCapitulo, Timestamp creadoEn, Timestamp actualizadoEn, String numeroPregunta,
             String tipoRespuesta, String comentarioPregunta, String textoPregunta) {
         this.id = id;
