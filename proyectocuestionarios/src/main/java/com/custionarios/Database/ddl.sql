@@ -34,8 +34,8 @@ CREATE TABLE categorias_catalogo (
 
 CREATE TABLE encuestas (
     id INT AUTO_INCREMENT,
-    creado_en DATE,
-    actualizado_en DATE,
+    creado_en TIMESTAMP,
+    actualizado_en TIMESTAMP,
     descripcion VARCHAR(255),
     nombre VARCHAR(255),
     CONSTRAINT pk_encuestas PRIMARY KEY (id)
