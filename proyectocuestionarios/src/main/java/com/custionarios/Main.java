@@ -1,5 +1,7 @@
 package com.custionarios;
 
+import com.custionarios.capitulos.infrastructure.controller.ConsoleAdapterCapitulo;
+import com.custionarios.categoriasCatalogo.infrastructure.controller.ConsoleAdapterCategoriasCatalogo;
 import com.custionarios.encuestas.infrastructure.controller.ConsoleAdapterEncuesta;
 import com.custionarios.opcionesRespuestas.infrastructure.controller.ConsoleAdapterOpcionesRespuesta;
 import com.custionarios.preguntas.infrastructure.controller.ConsoleAdapterPregunta;
@@ -33,7 +35,13 @@ public class Main {
         // ConsoleAdapterOpcionesRespuesta menuOpcionesRespuesta = new ConsoleAdapterOpcionesRespuesta();
         // menuOpcionesRespuesta.Start();
 
-        ConsoleAdapterEncuesta menuEncuesta = new ConsoleAdapterEncuesta();
-        menuEncuesta.Start();
+        // ConsoleAdapterEncuesta menuEncuesta = new ConsoleAdapterEncuesta();
+        // menuEncuesta.Start();
+
+        // ConsoleAdapterCategoriasCatalogo menuCatalogo = new ConsoleAdapterCategoriasCatalogo();
+        // menuCatalogo.Start();
+
+        ConsoleAdapterCapitulo menuCapitulo = new ConsoleAdapterCapitulo();
+        menuCapitulo.Start();
     }                      
 }
