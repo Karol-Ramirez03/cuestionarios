@@ -20,20 +20,20 @@ public class PreguntaRepository implements PreguntaService{
 
     @Override
     public void CreatePregunta(Pregunta pregunta) {
-        String sql = "INSERT INTO preguntas (id_capitulo, creado_en, actualizado_en, numero_pregunta, tipo_respuesta, comentario_pregunta, texto_pregunta) VALUES (?, NOW(), NOW(),?,?,?,?)";
+        String sql = "INSERT INTO preguntas (id_capitulo, creado_en, actualizado_en, numero_pregunta, tipo_respuesta, comentario_pregunta, texto_pregunta) VALUES (?, NOW(), NOW(),?,?,?)";
         try (Connection con = database.getConnection();
         PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, pregunta.getIdCapitulo());
-            ps.setString(2, pregunta.getNumeroPregunta());
-            ps.setString(3, pregunta.getTipoRespuesta());
-            ps.setString(4, pregunta.getComentarioPregunta());
-            ps.setString(5, pregunta.getTextoPregunta());
+            ps.setString(2, pregunta.getTipoRespuesta());
+            ps.setString(3, pregunta.getComentarioPregunta());
+            ps.setString(4, pregunta.getTextoPregunta());
 
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null,  "Preguntas agregado con exito");
 
             
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,  "verfica los datos ingresados y que el numero de pregunta sea unico");
             e.printStackTrace();
         }
         
@@ -114,20 +114,20 @@ public class PreguntaRepository implements PreguntaService{
 
     @Override
     public void updatePregunta(Pregunta pregunta) {
-        String sql = "UPDATE Preguntas SET id_capitulo = ?, actualizado_en = NOW(), numero_pregunta = ?, tipo_respuesta = ?, comentario_pregunta = ?, texto_pregunta = ? WHERE id = ?";
+        String sql = "UPDATE Preguntas SET id_capitulo = ?, actualizado_en = NOW(), tipo_respuesta = ?, comentario_pregunta = ?, texto_pregunta = ? WHERE id = ?";
         try (Connection con = database.getConnection();
         PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1,  pregunta.getIdCapitulo());
-            ps.setString(2, pregunta.getNumeroPregunta());
-            ps.setString(3, pregunta.getTipoRespuesta());
-            ps.setString(4, pregunta.getComentarioPregunta());
-            ps.setString(5, pregunta.getTextoPregunta());
-            ps.setInt(6, pregunta.getId());
+            ps.setString(2, pregunta.getTipoRespuesta());
+            ps.setString(3, pregunta.getComentarioPregunta());
+            ps.setString(4, pregunta.getTextoPregunta());
+            ps.setInt(5, pregunta.getId());
 
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null,  "Pregunta actualizado con exito");
             
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,  "verfica los datos ingresados y que el numero de pregunta sea unico");
             e.printStackTrace();
         }
         

@@ -29,8 +29,8 @@ public class Main {
         // ConsoleAdapterRespuesta menuRespuesta = new ConsoleAdapterRespuesta();
         // menuRespuesta.Start();
 
-        // ConsoleAdapterPregunta menuPregunta = new ConsoleAdapterPregunta();
-        // menuPregunta.Start();
+        ConsoleAdapterPregunta menuPregunta = new ConsoleAdapterPregunta();
+        menuPregunta.Start();
 
         // ConsoleAdapterOpcionesRespuesta menuOpcionesRespuesta = new ConsoleAdapterOpcionesRespuesta();
         // menuOpcionesRespuesta.Start();
@@ -41,7 +41,7 @@ public class Main {
         // ConsoleAdapterCategoriasCatalogo menuCatalogo = new ConsoleAdapterCategoriasCatalogo();
         // menuCatalogo.Start();
 
-        ConsoleAdapterCapitulo menuCapitulo = new ConsoleAdapterCapitulo();
-        menuCapitulo.Start();
+        // ConsoleAdapterCapitulo menuCapitulo = new ConsoleAdapterCapitulo();
+        // menuCapitulo.Start();
     }                      
 }

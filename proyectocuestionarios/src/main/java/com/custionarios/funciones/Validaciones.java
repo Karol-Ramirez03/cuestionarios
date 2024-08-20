@@ -40,14 +40,6 @@ public class Validaciones {
         
     }
     return Optional.empty();
-}
-    // public String cadenas_no_vacias(String dato){
-    //     if (dato != null && !dato.trim().isEmpty()) {
-    //         return dato;
-    //     } else {
-            
-    //     }
-
-    // }
+    }
 
 }

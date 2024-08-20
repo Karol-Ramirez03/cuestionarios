@@ -13,6 +13,13 @@ public class Pregunta {
     private String textoPregunta;
     
     
+    public Pregunta(int idCapitulo, String tipoRespuesta, String comentarioPregunta, String textoPregunta) {
+        this.idCapitulo = idCapitulo;
+        this.tipoRespuesta = tipoRespuesta;
+        this.comentarioPregunta = comentarioPregunta;
+        this.textoPregunta = textoPregunta;
+    }
+
     public Pregunta(int idCapitulo, String numeroPregunta, String tipoRespuesta, String comentarioPregunta,
             String textoPregunta) {
         this.idCapitulo = idCapitulo;

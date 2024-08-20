@@ -46,7 +46,7 @@ CREATE TABLE capitulos (
     id_encuesta INT,
     creado_en TIMESTAMP,
     actualizado_en TIMESTAMP,
-    numero_capitulo VARCHAR(50),
+    numero_capitulo VARCHAR(50) NOT NULL AUTO_INCREMENT,
     titulo_capitulo VARCHAR(50),
     CONSTRAINT pk_capitulos PRIMARY KEY (id),
     CONSTRAINT fk_capitulos_encuesta FOREIGN KEY (id_encuesta) REFERENCES encuestas(id)
@@ -57,7 +57,7 @@ CREATE TABLE preguntas (
     id_capitulo INT,
     creado_en TIMESTAMP,
     actualizado_en TIMESTAMP,
-    numero_pregunta VARCHAR(10) NOT NULL UNIQUE,
+    numero_pregunta VARCHAR(10) NOT NULL AUTO_INCREMENT,
     tipo_respuesta VARCHAR(20),
     comentario_pregunta VARCHAR(255),
     texto_pregunta TEXT,
@@ -84,7 +84,7 @@ CREATE TABLE opciones_respuesta (
 
 CREATE TABLE subopciones_respuesta (
     id INT AUTO_INCREMENT,
-    numero_subopcion INT,
+    numero_subopcion INT NOT NULL AUTO_INCREMENT,
     creado_en TIMESTAMP,
     actualizado_en TIMESTAMP,
     id_opcion_respuesta INT,

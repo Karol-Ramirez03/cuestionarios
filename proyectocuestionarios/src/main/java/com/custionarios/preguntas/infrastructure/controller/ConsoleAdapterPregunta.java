@@ -65,13 +65,12 @@ public class ConsoleAdapterPregunta {
             try {
                 String idCapitulostr = JOptionPane.showInputDialog(null, "Escriba el id del Capitulo escogido: ");
                 int idCapitulo = Integer.parseInt(idCapitulostr);
-                String numeroPregunta = JOptionPane.showInputDialog(null, "Escriba el numero de Pregunta: ");
                 String tipoPregunta = JOptionPane.showInputDialog(null, "Escriba tipo de Pregunta que se espera recibir: ");
                 String comentarioPregunta = JOptionPane.showInputDialog(null, "Escriba el comentario a la Pregunta : ");
                 String textoPregunta = JOptionPane.showInputDialog(null, "Escriba el texto de la Pregunta: ");
 
                 
-                Pregunta Pregunta = new Pregunta(idCapitulo, numeroPregunta, tipoPregunta, comentarioPregunta, textoPregunta);
+                Pregunta Pregunta = new Pregunta(idCapitulo, tipoPregunta, comentarioPregunta, textoPregunta);
                 createPregunta.execute(Pregunta);
                 Start();
                 
