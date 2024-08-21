@@ -109,6 +109,7 @@ public class ConsoleAdapterUsuarioRol {
                         int idroles = Integer.parseInt(idrol);
                         usr.setId_rol(idroles);
                         updUR.execute(usr);
+                        Start();
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(null,  "problemas en el ingreso de datos,Vuelve a intentarlo");
                         Start();

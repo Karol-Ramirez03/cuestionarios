@@ -135,6 +135,31 @@ public class GenerarCuestionariosRepository implements GenerarCuestionariosServi
         
         return Optional.empty();
     }
+
+    @Override
+    public Optional<Integer>  mostraopciondelosidpadres(int opc) {
+        String sql = " SELECT or1.id_pregunta AS id_padre FROM opciones_respuesta or2 JOIN opciones_respuesta or1 ON or2.id_opcion_padre = or1.id WHERE id= ?";
+        try (Connection connection = database.getConnection();
+        PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, opc);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                rs.getInt("or1.id_pregunta");
+                return Optional.of(null);      
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "¡Error!, vuelve a intentarlo ");
+            e.printStackTrace();
+        }
+        
+        return Optional.empty();
+    }
+
+    @Override
+    public void guardar_respuesta() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'guardar_respuesta'");
+    }
     
     
 }

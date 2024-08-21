@@ -27,7 +27,7 @@ public class menuAdministracion {
                     7. Administrar Opciones 
                     8. Administrar Encuestas
                     9. Administrar Categorias
-                    10.
+                    10. Administrar Capitulos
                     """;
         Optional<Integer> opcion = Validaciones.mostrarOpciones(opciones,1,6);
 

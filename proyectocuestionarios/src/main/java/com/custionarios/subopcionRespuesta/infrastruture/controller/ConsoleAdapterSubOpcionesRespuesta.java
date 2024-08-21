@@ -218,7 +218,7 @@ public class ConsoleAdapterSubOpcionesRespuesta {
                         }
                 } 
                 updSOR.execute(datoupd);
-                
+                Start();
                 } catch (Exception e) {
                     e.printStackTrace();
                     Start();

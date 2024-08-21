@@ -12,5 +12,11 @@ public interface GenerarCuestionariosService {
     public List<GenerarCuestionarios> mostrar_preguntas(int capitulo);
     public Optional<List<GenerarCuestionarios>> mostrar_opciones(int pregunta);
     public Optional<List<GenerarCuestionarios>> mostrar_subopciones(int opc);
-    // guardar respuesta
+    public Optional<Integer> mostraopciondelosidpadres(int opc); 
+    // la opcion hija esta vinculada a una pregunta que debe ser resuelta para poder ser contestada
+    // si la pregunta tiene una opcion padre buscar la opcion juntarla conun join
+    // y mostrar el 1 de la pregunta 
+    // valor opcion, idcategoriacatalogo, idpregunta,idopcionpadre,textoopcion
+    
+    public void  guardar_respuesta();
 }

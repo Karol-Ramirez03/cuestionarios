@@ -184,6 +184,7 @@ public class ConsoleAdapterUsuario {
                         }
                 } 
                 updUsuario.execute(usuarioUpd); 
+                Start();
                 
             } catch (Exception e) {
                 e.printStackTrace();

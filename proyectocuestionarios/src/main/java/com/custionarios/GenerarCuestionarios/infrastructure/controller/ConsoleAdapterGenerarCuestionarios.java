@@ -10,11 +10,23 @@ import com.custionarios.GenerarCuestionarios.application.MostrarCuestionariosUse
 import com.custionarios.GenerarCuestionarios.application.MostrarOpcionesUseCase;
 import com.custionarios.GenerarCuestionarios.application.MostrarPreguntasUseCase;
 import com.custionarios.GenerarCuestionarios.application.MostrarSubOpcionesUseCase;
+import com.custionarios.GenerarCuestionarios.application.MostraropcionidpadreUseCase;
 import com.custionarios.GenerarCuestionarios.domain.entity.GenerarCuestionarios;
 import com.custionarios.GenerarCuestionarios.domain.service.GenerarCuestionariosService;
 import com.custionarios.GenerarCuestionarios.infrastructure.repository.GenerarCuestionariosRepository;
 
-
+// ingresa cuestionario
+/**
+ * ingresa capitulo 
+ * seleciona pregunta 
+ * if retorna id de la pregunta 
+ * con la funcion mostrar pregunta pasa el id y muestra la pregunta para contestarla 
+ * la siguiente automaticamente mostrar pregunta de seleccion pregunta
+ * sus opciones 
+ * y si no responde pregunta a normal
+ * mostra pregunta 
+ * sus opciones y subopciones
+ */
 
 public class ConsoleAdapterGenerarCuestionarios {
     private GenerarCuestionariosService generarCuestionariosService;
@@ -23,6 +35,7 @@ public class ConsoleAdapterGenerarCuestionarios {
     private MostrarPreguntasUseCase mostrarPreg;
     private MostrarOpcionesUseCase mostrarOpc;
     private MostrarSubOpcionesUseCase mostrarSub;
+    private MostraropcionidpadreUseCase mostraridpadre;
 
     
 
@@ -33,6 +46,7 @@ public class ConsoleAdapterGenerarCuestionarios {
         this.mostrarPreg = new MostrarPreguntasUseCase(generarCuestionariosService);
         this.mostrarOpc = new MostrarOpcionesUseCase(generarCuestionariosService);
         this.mostrarSub = new MostrarSubOpcionesUseCase(generarCuestionariosService);
+        this.mostraridpadre = new MostraropcionidpadreUseCase(generarCuestionariosService);
     }
 
 
@@ -47,102 +61,104 @@ public class ConsoleAdapterGenerarCuestionarios {
 
             sb.append(id).append(" - ").append(nombre).append("\n");   
         }
-        try {
-            int num = Integer.parseInt(JOptionPane.showInputDialog(null,sb));
+       
+            String  num = JOptionPane.showInputDialog(null,sb);
             // el numero es el id del cuestionario
-
-            List<GenerarCuestionarios> capitulos = mostrarCap.execute(num);
-            //muestra los capitulos relacionados a la encuesta
-            System.out.println(num);
-            StringBuilder capi = new StringBuilder();
-            for (GenerarCuestionarios cap : capitulos) {
-                int id = cap.getIndice();
-                String nombre = cap.getNombre();
-
-                capi.append(id).append(" - ").append(nombre).append("\n");   
-            }
-            try {
-
-                int numcap = Integer.parseInt(JOptionPane.showInputDialog(null, capi));
-                // seleciona el id del capitulo al que estan relacionadas las preguntas
-                StringBuilder preg = new StringBuilder();
-                List<GenerarCuestionarios> preguntas = mostrarPreg.execute(numcap);
-
-                for (GenerarCuestionarios cap : preguntas) {
-                    int id = cap.getIndice();
-                    String nombre = cap.getNombre();
-
-                    preg.append(id).append(" - ").append(nombre).append("\n");   
-                }
+            if (num == null) {
+                return;
+            } else{
                 try {
-                    System.out.println("validar");
-                    int numPreg =  Integer.parseInt(JOptionPane.showInputDialog(null, preg));
-                    // selecciona el id de la pregunta
-                    StringBuilder opc = new StringBuilder();
-                    Optional<List<GenerarCuestionarios>> opciones = mostrarOpc.execute(numPreg);
-                    // mostrar opciones relacionadas a la pregunta 
-                    
-                    if (opciones.isPresent()) {
-                        List<GenerarCuestionarios> listOpciones = opciones.get();
-                        for (GenerarCuestionarios opcion : listOpciones) {
-                            int idopc = opcion.getIndice();
-                            String nombreopc = opcion.getNombre();
+                    int numero = Integer.parseInt(num);
+                    List<GenerarCuestionarios> capitulos = mostrarCap.execute(numero);
+                    //muestra los capitulos relacionados a la encuesta
+                    StringBuilder capi = new StringBuilder();
+    
+    
+                    for (GenerarCuestionarios cap : capitulos) {
+                        int id = cap.getIndice();
+                        String nombre = cap.getNombre();
+    
+                        capi.append(id).append(" - ").append(nombre).append("\n");   
+                    }
+                    try {
 
-                            opc.append(idopc).append(" - ").append(nombreopc.toString()).append("\n"); 
-                        }
-                        try {
-                            int numOpc = Integer.parseInt(JOptionPane.showInputDialog(null,opc));
-                            //aqui buscamos si tiene relacionado subopciones
-                            Optional<List<GenerarCuestionarios>> subOpciones = mostrarSub.execute(numOpc);
-                            StringBuilder sub = new StringBuilder();
-                            if (subOpciones.isPresent()) {
-                                List<GenerarCuestionarios> datos = subOpciones.get();
-                                for (GenerarCuestionarios dato : datos) {
-                                    int numero = dato.getIndice();
-                                    String informacion = dato.getNombre();
-
-                                    sub.append(numero).append(" - ").append(informacion).append("\n"); ;
-                                }
-                                try {
-                                    int numsub = Integer.parseInt(JOptionPane.showInputDialog(null,sub));
-                                    
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    JOptionPane.showMessageDialog(null,"Error!, Vuelve a intentarlo");
-                                    Start();
-                                }
+                        String numpCAP = JOptionPane.showInputDialog(null, capi);
+                        if (numpCAP == null) {
+                            return;
+                            
+                        } else {
+                            int numeroCap = Integer.parseInt(numpCAP);
+                            // seleciona el id del capitulo al que estan relacionadas las preguntas
+                            StringBuilder preg = new StringBuilder();
+                            List<GenerarCuestionarios> preguntas = mostrarPreg.execute(numeroCap);
+                            for (GenerarCuestionarios cap : preguntas) {
+                                int id = cap.getIndice();
+                                String nombre = cap.getNombre();
+            
+                                preg.append(id).append(" - ").append(nombre).append("\n");   
+                            }
+                            String numero_pregunta= JOptionPane.showInputDialog(null, preg);
+                            if (numero_pregunta == null) {
+                                return;
                             } else {
+                                try {
+                                    int pregnum = Integer.parseInt(numero_pregunta);
+                                    Optional<Integer> numPregPrimero = mostraridpadre.execute(pregnum);
+                                    if (numPregPrimero.isPresent()) {
+                                        int preguntaPrimero = numPregPrimero.get();
+                                        mostrarPreg.execute(preguntaPrimero);
+
+
+                                        //opcion guardar
+                                        mostrarPreg.execute(pregnum);
+                                        //opcion guardar 
+                                    } else {
+                                        mostrarPreg.execute(pregnum);
+                                        
+                                        //opcion guardar
+                                    }
+
+                                } catch (Exception e) {
+                                    // TODO: handle exception
+                                }
                                 
                             }
-                        } catch (Exception e) {
-                            JOptionPane.showMessageDialog(null,"Error!, Vuelve a intentarlo");
-                            Start();
-                        }
-                    } else {
-                        System.out.println("chao");
-                        
+                            
+                        }                        
+                           
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        JOptionPane.showMessageDialog(null,"Error!, Vuelve a intentarlo");
+                        Start();
                     }
+                    
                 } catch (Exception e) {
+
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(null,"Error!, Vuelve a intentarlo");
                     Start();
                 }
-                
-            } catch (Exception e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(null,"Error!, Vuelve a intentarlo");
-                Start();
+           
+           
+           
+           
+           
+           
+           
+           
+           
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null,"Error!, Vuelve a intentarlo");
-            Start();
-        }
-        
 
+           
+            System.out.println(num);
+            
+                
+           
+        } 
+    
 
-    }
+ }
 
     
     
-}
+

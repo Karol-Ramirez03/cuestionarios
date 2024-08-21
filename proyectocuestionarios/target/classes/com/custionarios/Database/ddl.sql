@@ -81,6 +81,7 @@ CREATE TABLE opciones_respuesta (
     CONSTRAINT fk_opciones_pregunta FOREIGN KEY (id_pregunta) REFERENCES preguntas(id),
     CONSTRAINT fk_opciones_padre FOREIGN KEY (id_opcion_padre) REFERENCES opciones_respuesta(id)
 );
+
 -- tambien crear procedure
 CREATE TABLE subopciones_respuesta (
     id INT AUTO_INCREMENT,
