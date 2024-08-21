@@ -187,6 +187,8 @@ public class ConsoleAdapterCapitulo {
                                 bandera = false;
                                 break;
                             }
+                        } else {
+                            bandera = false;
                         }
                 } 
                 updCap.execute(CapituloUpd);

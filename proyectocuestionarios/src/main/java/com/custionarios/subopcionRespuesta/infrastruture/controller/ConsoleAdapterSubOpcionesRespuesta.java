@@ -213,6 +213,8 @@ public class ConsoleAdapterSubOpcionesRespuesta {
                                 bandera = false;
                                 break;
                             }
+                        }else {
+                            bandera = false;
                         }
                 } 
                 updSOR.execute(datoupd);

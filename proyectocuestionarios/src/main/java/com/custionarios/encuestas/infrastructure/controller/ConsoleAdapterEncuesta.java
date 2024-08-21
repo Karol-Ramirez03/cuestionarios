@@ -177,6 +177,8 @@ public class ConsoleAdapterEncuesta {
                                 bandera = false;
                                 break;
                             }
+                        } else {
+                            bandera = false;
                         }
                 } 
                 updencuesta.execute(EncuestaUpd);

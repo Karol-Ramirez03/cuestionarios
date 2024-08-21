@@ -129,7 +129,7 @@ public class GenerarCuestionariosRepository implements GenerarCuestionariosServi
             }
             return Optional.of(capitulos);       
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "¡Error!, vuelve a intenntarlo ");
+            JOptionPane.showMessageDialog(null, "¡Error!, vuelve a intentarlo ");
             e.printStackTrace();
         }
         

@@ -274,7 +274,7 @@ BEGIN
     FROM preguntas
     WHERE id = preguntaActualizar;
 
-    SELECT numero_capitulo INTO preguntaNumero
+    SELECT numero_pregunta INTO preguntaNumero
     FROM preguntas
     WHERE id = preguntaActualizar AND capitulonum = idcapitulo; 
 

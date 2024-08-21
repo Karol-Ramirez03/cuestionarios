@@ -214,6 +214,8 @@ public class ConsoleAdapterPregunta {
                                 bandera = false;
                                 break;
                             }
+                        } else {
+                            bandera = false;
                         }
                 } 
                 updPregunta.execute(PreguntaUpd);

@@ -191,6 +191,8 @@ public class ConsoleAdapterRespuesta {
                                 bandera = false;
                                 break;
                             }
+                        } else {
+                            bandera = false;
                         }
                 } 
                 updresp.execute(RespuestaUpd);

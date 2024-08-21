@@ -249,15 +249,19 @@ public class ConsoleAdapterOpcionesRespuesta {
                                 bandera = false;
                                 break;
                             }
+                        } else {
+                            bandera = false;
                         }
                 } 
+                
                 updOR.execute(RespuestaUpd);
                 Start();
-                
+             
             } catch (Exception e) {
                 e.printStackTrace();
                 Start();
-            }
+            } 
+            
                 break;
             case 6:
                 break;

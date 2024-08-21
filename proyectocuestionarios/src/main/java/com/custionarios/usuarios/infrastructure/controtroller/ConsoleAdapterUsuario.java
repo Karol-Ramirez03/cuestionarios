@@ -179,6 +179,8 @@ public class ConsoleAdapterUsuario {
                                 bandera = false;
                                 break;
                             }
+                        }else {
+                            bandera = false;
                         }
                 } 
                 updUsuario.execute(usuarioUpd); 
