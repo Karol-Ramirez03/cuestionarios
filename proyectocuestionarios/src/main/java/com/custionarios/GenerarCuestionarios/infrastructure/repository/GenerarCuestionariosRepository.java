@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.swing.JOptionPane;
 
@@ -56,6 +57,83 @@ public class GenerarCuestionariosRepository implements GenerarCuestionariosServi
             e.printStackTrace();
         }
         return capitulos;
+    }
+
+    @Override
+    public List<GenerarCuestionarios> mostrar_preguntas(int capituloid) {
+        String sql = "SELECT numero_pregunta, texto_pregunta FROM preguntas WHERE id_capitulo = ?";
+        List<GenerarCuestionarios> capitulos = new ArrayList<>();
+        try (Connection connection = database.getConnection();
+        PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, capituloid);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int numero_pregunta = rs.getInt("numero_pregunta");
+                String texto_pregunta = rs.getString("texto_pregunta");
+                 
+                GenerarCuestionarios capitulo = new GenerarCuestionarios(numero_pregunta, texto_pregunta);
+                capitulos.add(capitulo);
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "¡Error!, vuelve a intenntarlo ");
+            e.printStackTrace();
+        }
+        return capitulos;
+    }
+
+    @Override
+    public Optional<List<GenerarCuestionarios>> mostrar_opciones(int pregunta) {
+        String sql = "SELECT valor_opcion, texto_opcion FROM opciones_respuesta WHERE id_pregunta = ?";
+        List<GenerarCuestionarios> capitulos = new ArrayList<>();
+        try (Connection connection = database.getConnection();
+        PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, pregunta);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int numero_pregunta = rs.getInt("valor_opcion");
+                String texto_pregunta = rs.getString("texto_opcion");
+                 
+                GenerarCuestionarios capitulo = new GenerarCuestionarios(numero_pregunta, texto_pregunta);
+                capitulos.add(capitulo);
+            }
+            if (capitulos.isEmpty()) {
+                return Optional.empty();
+            }
+            return Optional.of(capitulos);       
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "¡Error!, vuelve a intenntarlo ");
+            e.printStackTrace();
+        }
+        
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<List<GenerarCuestionarios>> mostrar_subopciones(int opc) {
+        String sql = "SELECT numero_subopcion, texto_subopcion FROM subopciones_respuesta WHERE id_opcion_rspuesta = ?";
+        List<GenerarCuestionarios> capitulos = new ArrayList<>();
+        try (Connection connection = database.getConnection();
+        PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, opc);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int numero_pregunta = rs.getInt("numero_subopcion");
+                String texto_pregunta = rs.getString("texto_subopcion");
+                 
+                GenerarCuestionarios capitulo = new GenerarCuestionarios(numero_pregunta, texto_pregunta);
+                capitulos.add(capitulo);
+            }
+            if (capitulos.isEmpty()) {
+                return Optional.empty();
+            }
+            return Optional.of(capitulos);       
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "¡Error!, vuelve a intenntarlo ");
+            e.printStackTrace();
+        }
+        
+        return Optional.empty();
     }
     
     

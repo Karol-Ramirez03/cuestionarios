@@ -35,6 +35,9 @@ INSERT INTO categorias_catalogo (creado_en, actualizado_en, nombre) VALUES
 ('2024-10-01', '2024-10-01', 'Escala de regularidad del sueño'),
 ('2024-12-01', '2024-12-01', 'Frecuencia de calidad de alimentacion'),
 ('2024-12-20', '2024-12-20', 'Escala de nivel de estrés');
+('2024-09-01', '2024-09-01', 'presencia de enfermedades cronica')
+('2024-09-01', '2024-09-01', 'regularidad del Sueño')
+
 
 INSERT INTO encuestas (creado_en, actualizado_en, descripcion, nombre) VALUES 
 ('2024-09-01', '2024-09-15', 'Encuesta sobre salud', 'Encuesta de Salud'),
@@ -82,16 +85,15 @@ INSERT INTO preguntas (id_capitulo, creado_en, actualizado_en, numero_pregunta, 
 
 INSERT INTO opciones_respuesta (valor_opcion, id_categoria_catalogo, id_pregunta, creado_en, actualizado_en, tipo_componente_html, comentario_respuesta, texto_opcion) VALUES
 
-(1, 1, 2, '2024-09-01', '2024-09-15', 'radio', 'Escala de actividad física', 'Muy bajo'),
-(2, 1, 2, '2024-09-01', '2024-09-15', 'radio', 'Escala de actividad física', 'Bajo'),
-(3, 1, 2, '2024-09-01', '2024-09-15', 'radio', 'Escala de actividad física', 'Moderado'),
-(4, 1, 2, '2024-09-01', '2024-09-15', 'radio', 'Escala de actividad física', 'Alto'),
-(5, 1, 2, '2024-09-01', '2024-09-15', 'radio', 'Escala de actividad física', 'Muy alto'),
+(1, 2, 2, '2024-09-01', '2024-09-15', 'radio', 'Escala de actividad física', 'Muy bajo'),
+(2, 2, 2, '2024-09-01', '2024-09-15', 'radio', 'Escala de actividad física', 'Bajo'),
+(3, 2, 2, '2024-09-01', '2024-09-15', 'radio', 'Escala de actividad física', 'Moderado'),
+(4, 2, 2, '2024-09-01', '2024-09-15', 'radio', 'Escala de actividad física', 'Alto'),
+(5, 2, 2, '2024-09-01', '2024-09-15', 'radio', 'Escala de actividad física', 'Muy alto'),
 
 
-
-(1, 3, 4, '2024-09-01', '2024-09-15', 'radio', 'Escala de salud', 'si'),
-(2, 3, 4, '2024-09-01', '2024-09-15', 'radio', 'Escala de salud', 'no'),
+(1, 7, 4, '2024-09-01', '2024-09-15', 'radio', 'Escala de salud', 'si'),
+(2, 7, 4, '2024-09-01', '2024-09-15', 'radio', 'Escala de salud', 'no'),
 
 (1, 3, 3, '2024-09-01', '2024-09-15', 'radio', 'Escala de salud', 'Muy bajo'),
 (2, 3, 3, '2024-09-01', '2024-09-15', 'radio', 'Escala de salud', 'Bajo'),
@@ -109,11 +111,11 @@ INSERT INTO opciones_respuesta (valor_opcion, id_categoria_catalogo, id_pregunta
 (5, 4, 5, '2024-09-01', '2024-09-15', 'radio', 'escala de sueño', 'Muy alto'),
 
 
-(1, 4, 6, '2024-09-01', '2024-09-16', 'radio', 'escala de sueño', 'Muy bajo'),
-(2, 4, 6, '2024-09-01', '2024-09-16', 'radio', 'escala de sueño', 'Bajo'),
-(3, 4, 6, '2024-09-01', '2024-09-16', 'radio', 'escala de sueño', 'Moderado'),
-(4, 4, 6, '2024-09-01', '2024-09-16', 'radio', 'escala de sueño', 'Alto'),
-(5, 4, 6, '2024-09-01', '2024-09-15', 'radio', 'escala de sueño', 'Muy alto'),
+(1, 8, 6, '2024-09-01', '2024-09-16', 'radio', 'escala de sueño', 'Muy bajo'),
+(2, 8, 6, '2024-09-01', '2024-09-16', 'radio', 'escala de sueño', 'Bajo'),
+(3, 8, 6, '2024-09-01', '2024-09-16', 'radio', 'escala de sueño', 'Moderado'),
+(4, 8, 6, '2024-09-01', '2024-09-16', 'radio', 'escala de sueño', 'Alto'),
+(5, 8, 6, '2024-09-01', '2024-09-15', 'radio', 'escala de sueño', 'Muy alto'),
 
 
 
@@ -133,6 +135,9 @@ INSERT INTO opciones_respuesta (valor_opcion, id_categoria_catalogo, id_pregunta
 (3, 6, 9, '2024-12-20', '2024-12-30', 'radio', 'Escala de nivel de estrés', 'Alto'),
 (4, 6, 9, '2024-12-20', '2024-12-30', 'radio', 'Escala de nivel de estrés', 'Muy alto');
 
+INSERT INTO subopciones_respuesta (numero_subopcion, creado_en, actualizado_en, id_opcion_respuesta, componente_html, texto_subopcion) VALUES
+(1, '2024-09-02 10:00:00', '2024-09-02 10:00:00', 1, 'checkbox', 'practico poco porque no tengo los recursos'),
+(2, '2024-09-02 10:00:00', '2024-09-02 10:00:00', 1, 'checkbox', 'practico poco porque me da pereza');
 
 
 
@@ -151,7 +156,11 @@ BEGIN
     WHERE id_encuesta = idEncuesta;
    
 
-    SET NumSiguiente = NumMax + 1;
+    IF NumMax IS NULL THEN
+        SET NumSiguiente = 1;
+    ELSE
+        SET NumSiguiente = NumMax + 1;
+    END IF;
 
     INSERT INTO capitulos (id_encuesta, creado_en, actualizado_en, numero_capitulo, titulo_capitulo)
     VALUES (idEncuesta,NOW(),NOW(),NumSiguiente,titulocapitulo);

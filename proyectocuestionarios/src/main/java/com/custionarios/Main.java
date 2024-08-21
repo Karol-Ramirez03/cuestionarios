@@ -1,5 +1,16 @@
 package com.custionarios;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+
+import com.custionarios.Database.database;
+
 // import javax.swing.JButton;
 // import javax.swing.JFrame;
 // import javax.swing.JOptionPane;
@@ -54,5 +65,5 @@ public class Main {
         ConsoleAdapterGenerarCuestionarios encuesta = new ConsoleAdapterGenerarCuestionarios();
         encuesta.Start();
 
-    }                      
+    }                    
 }

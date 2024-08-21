@@ -40,7 +40,7 @@ CREATE TABLE encuestas (
     nombre VARCHAR(255),
     CONSTRAINT pk_encuestas PRIMARY KEY (id)
 );
-
+-- procedure LISTO
 CREATE TABLE capitulos (
     id INT AUTO_INCREMENT,
     id_encuesta INT,
@@ -51,7 +51,7 @@ CREATE TABLE capitulos (
     CONSTRAINT pk_capitulos PRIMARY KEY (id),
     CONSTRAINT fk_capitulos_encuesta FOREIGN KEY (id_encuesta) REFERENCES encuestas(id)
 );
-
+-- create procedure
 CREATE TABLE preguntas (
     id INT AUTO_INCREMENT,
     id_capitulo INT,
@@ -64,7 +64,7 @@ CREATE TABLE preguntas (
     CONSTRAINT pk_preguntas PRIMARY KEY (id),
     CONSTRAINT fk_preguntas_capitulo FOREIGN KEY (id_capitulo) REFERENCES capitulos(id)
 );
-
+--valor de opcion crear la misma funcion para los capitulos
 CREATE TABLE opciones_respuesta (
     id INT AUTO_INCREMENT,
     valor_opcion INT,
@@ -81,7 +81,7 @@ CREATE TABLE opciones_respuesta (
     CONSTRAINT fk_opciones_pregunta FOREIGN KEY (id_pregunta) REFERENCES preguntas(id),
     CONSTRAINT fk_opciones_padre FOREIGN KEY (id_opcion_padre) REFERENCES opciones_respuesta(id)
 );
-
+-- tambien crear procedure
 CREATE TABLE subopciones_respuesta (
     id INT AUTO_INCREMENT,
     numero_subopcion INT NOT NULL,
@@ -100,6 +100,20 @@ CREATE TABLE respuestas (
     id_subrespuesta INT,
     texto_respuesta VARCHAR(80),
     CONSTRAINT pk_respuestas PRIMARY KEY (id),
-    CONSTRAINT fk_respuestas_pregunta FOREIGN KEY (id_respuesta) REFERENCES preguntas(id),
+    CONSTRAINT fk_respuestas_opcionesrespuesta FOREIGN KEY (id_respuesta) REFERENCES opciones_respuesta(id),
+    CONSTRAINT fk_respuestas_subopcion FOREIGN KEY (id_subrespuesta) REFERENCES subopciones_respuesta(id)
+);
+
+-- respuesta tabla alterna (
+
+CREATE TABLE respuestas (
+    id INT AUTO_INCREMENT,
+    id_pregunta INT,
+    id_respuesta INT,
+    id_subrespuesta INT,
+    texto_respuesta VARCHAR(80),
+    CONSTRAINT pk_respuestas PRIMARY KEY (id),
+    CONSTRAINT fk_respuestas_opcionesrespuesta FOREIGN KEY (id_respuesta) REFERENCES opciones_respuesta(id),
+    CONSTRAINT fk_respuestas_pregunta FOREIGN KEY (id_pregunta) REFERENCES preguntas(id),
     CONSTRAINT fk_respuestas_subopcion FOREIGN KEY (id_subrespuesta) REFERENCES subopciones_respuesta(id)
 );
