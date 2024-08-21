@@ -51,7 +51,7 @@ CREATE TABLE capitulos (
     CONSTRAINT pk_capitulos PRIMARY KEY (id),
     CONSTRAINT fk_capitulos_encuesta FOREIGN KEY (id_encuesta) REFERENCES encuestas(id)
 );
--- create procedure
+-- procedure verificar
 CREATE TABLE preguntas (
     id INT AUTO_INCREMENT,
     id_capitulo INT,

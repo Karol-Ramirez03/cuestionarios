@@ -65,6 +65,7 @@ public class Validaciones {
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Debe ingresar un número válido");
+            break;
         }  
     }
     return opcion;

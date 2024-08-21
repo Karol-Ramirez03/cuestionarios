@@ -9,10 +9,11 @@ import com.custionarios.GenerarCuestionarios.application.MostrarCapitulosUseCase
 import com.custionarios.GenerarCuestionarios.application.MostrarCuestionariosUseCase;
 import com.custionarios.GenerarCuestionarios.application.MostrarOpcionesUseCase;
 import com.custionarios.GenerarCuestionarios.application.MostrarPreguntasUseCase;
+import com.custionarios.GenerarCuestionarios.application.MostrarSubOpcionesUseCase;
 import com.custionarios.GenerarCuestionarios.domain.entity.GenerarCuestionarios;
 import com.custionarios.GenerarCuestionarios.domain.service.GenerarCuestionariosService;
 import com.custionarios.GenerarCuestionarios.infrastructure.repository.GenerarCuestionariosRepository;
-import com.custionarios.funciones.Validaciones;
+
 
 
 public class ConsoleAdapterGenerarCuestionarios {
@@ -21,6 +22,7 @@ public class ConsoleAdapterGenerarCuestionarios {
     private MostrarCapitulosUseCase mostrarCap;
     private MostrarPreguntasUseCase mostrarPreg;
     private MostrarOpcionesUseCase mostrarOpc;
+    private MostrarSubOpcionesUseCase mostrarSub;
 
     
 
@@ -30,6 +32,7 @@ public class ConsoleAdapterGenerarCuestionarios {
         this.mostrarCap = new MostrarCapitulosUseCase(generarCuestionariosService);
         this.mostrarPreg = new MostrarPreguntasUseCase(generarCuestionariosService);
         this.mostrarOpc = new MostrarOpcionesUseCase(generarCuestionariosService);
+        this.mostrarSub = new MostrarSubOpcionesUseCase(generarCuestionariosService);
     }
 
 
@@ -45,7 +48,7 @@ public class ConsoleAdapterGenerarCuestionarios {
             sb.append(id).append(" - ").append(nombre).append("\n");   
         }
         try {
-            int num = Validaciones.elegiropcion(JOptionPane.showInputDialog(null,sb));
+            int num = Integer.parseInt(JOptionPane.showInputDialog(null,sb));
             // el numero es el id del cuestionario
 
             List<GenerarCuestionarios> capitulos = mostrarCap.execute(num);
@@ -74,50 +77,67 @@ public class ConsoleAdapterGenerarCuestionarios {
                 try {
                     System.out.println("validar");
                     int numPreg =  Integer.parseInt(JOptionPane.showInputDialog(null, preg));
+                    // selecciona el id de la pregunta
                     StringBuilder opc = new StringBuilder();
                     Optional<List<GenerarCuestionarios>> opciones = mostrarOpc.execute(numPreg);
+                    // mostrar opciones relacionadas a la pregunta 
                     
                     if (opciones.isPresent()) {
                         List<GenerarCuestionarios> listOpciones = opciones.get();
-                        System.out.println("hola");
                         for (GenerarCuestionarios opcion : listOpciones) {
                             int idopc = opcion.getIndice();
                             String nombreopc = opcion.getNombre();
-                            System.out.println(idopc);
-                            System.out.println(nombreopc);
 
                             opc.append(idopc).append(" - ").append(nombreopc.toString()).append("\n"); 
                         }
-                    int numOpc = Integer.parseInt(JOptionPane.showInputDialog(null,opc));
+                        try {
+                            int numOpc = Integer.parseInt(JOptionPane.showInputDialog(null,opc));
+                            //aqui buscamos si tiene relacionado subopciones
+                            Optional<List<GenerarCuestionarios>> subOpciones = mostrarSub.execute(numOpc);
+                            StringBuilder sub = new StringBuilder();
+                            if (subOpciones.isPresent()) {
+                                List<GenerarCuestionarios> datos = subOpciones.get();
+                                for (GenerarCuestionarios dato : datos) {
+                                    int numero = dato.getIndice();
+                                    String informacion = dato.getNombre();
+
+                                    sub.append(numero).append(" - ").append(informacion).append("\n"); ;
+                                }
+                                try {
+                                    int numsub = Integer.parseInt(JOptionPane.showInputDialog(null,sub));
+                                    
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    JOptionPane.showMessageDialog(null,"Error!, Vuelve a intentarlo");
+                                    Start();
+                                }
+                            } else {
+                                
+                            }
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(null,"Error!, Vuelve a intentarlo");
+                            Start();
+                        }
                     } else {
                         System.out.println("chao");
                         
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    JOptionPane.showMessageDialog(null,"Error!, Vuelve a intentarlo");
+                    Start();
                 }
                 
             } catch (Exception e) {
+                e.printStackTrace();
                 JOptionPane.showMessageDialog(null,"Error!, Vuelve a intentarlo");
                 Start();
             }
         } catch (Exception e) {
+            e.printStackTrace();
             JOptionPane.showMessageDialog(null,"Error!, Vuelve a intentarlo");
             Start();
         }
-
-//         CREATE TABLE subopciones_respuesta (
-//     id INT AUTO_INCREMENT,
-//     numero_subopcion INT NOT NULL,
-//     creado_en TIMESTAMP,
-//     actualizado_en TIMESTAMP,
-//     id_opcion_respuesta INT,
-//     componente_html VARCHAR(255),
-//     texto_subopcion VARCHAR(255),
-//     CONSTRAINT pk_subopciones_respuesta PRIMARY KEY (id),
-//     CONSTRAINT fk_subopciones_opcion FOREIGN KEY (id_opcion_respuesta) REFERENCES opciones_respuesta(id)
-// );
-        
         
 
 

@@ -111,17 +111,17 @@ public class GenerarCuestionariosRepository implements GenerarCuestionariosServi
 
     @Override
     public Optional<List<GenerarCuestionarios>> mostrar_subopciones(int opc) {
-        String sql = "SELECT numero_subopcion, texto_subopcion FROM subopciones_respuesta WHERE id_opcion_rspuesta = ?";
+        String sql = "SELECT numero_subopcion, texto_subopcion FROM subopciones_respuesta WHERE id_opcion_respuesta = ?";
         List<GenerarCuestionarios> capitulos = new ArrayList<>();
         try (Connection connection = database.getConnection();
         PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, opc);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                int numero_pregunta = rs.getInt("numero_subopcion");
-                String texto_pregunta = rs.getString("texto_subopcion");
+                int numero_subopcion = rs.getInt("numero_subopcion");
+                String texto_subopcion = rs.getString("texto_subopcion");
                  
-                GenerarCuestionarios capitulo = new GenerarCuestionarios(numero_pregunta, texto_pregunta);
+                GenerarCuestionarios capitulo = new GenerarCuestionarios(numero_subopcion, texto_subopcion);
                 capitulos.add(capitulo);
             }
             if (capitulos.isEmpty()) {

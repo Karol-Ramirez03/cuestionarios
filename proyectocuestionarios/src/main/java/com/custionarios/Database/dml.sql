@@ -34,9 +34,9 @@ INSERT INTO categorias_catalogo (creado_en, actualizado_en, nombre) VALUES
 ('2024-12-01', '2024-12-01', 'escala de salud'),
 ('2024-10-01', '2024-10-01', 'Escala de regularidad del sueño'),
 ('2024-12-01', '2024-12-01', 'Frecuencia de calidad de alimentacion'),
-('2024-12-20', '2024-12-20', 'Escala de nivel de estrés');
-('2024-09-01', '2024-09-01', 'presencia de enfermedades cronica')
-('2024-09-01', '2024-09-01', 'regularidad del Sueño')
+('2024-12-20', '2024-12-20', 'Escala de nivel de estrés'),
+('2024-09-01', '2024-09-01', 'presencia de enfermedades cronica'),
+('2024-09-01', '2024-09-01', 'regularidad del Sueño');
 
 
 INSERT INTO encuestas (creado_en, actualizado_en, descripcion, nombre) VALUES 
@@ -139,7 +139,7 @@ INSERT INTO subopciones_respuesta (numero_subopcion, creado_en, actualizado_en, 
 (1, '2024-09-02 10:00:00', '2024-09-02 10:00:00', 1, 'checkbox', 'practico poco porque no tengo los recursos'),
 (2, '2024-09-02 10:00:00', '2024-09-02 10:00:00', 1, 'checkbox', 'practico poco porque me da pereza');
 
-
+--procedure para guardar los capitulos con su numero correspondiente
 
 DELIMITER $$
 DROP PROCEDURE IF EXISTS validarnumerocapitulo$$
@@ -168,7 +168,7 @@ END$$
 DELIMITER ;
 
 
-
+--procedure para actualizar los capitulos con su numero correspondiente
 
 
 DELIMITER $$
@@ -213,6 +213,90 @@ BEGIN
 END$$
 DELIMITER ;
 
+--procedure para guardar los preguntas con su numero correspondiente
 
 
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS validarnumeroPregunta$$
+CREATE PROCEDURE  validarnumeroPregunta(
+    IN idCapitulo INT,
+    IN tipoRespuesta VARCHAR(100),
+    IN comentarioPregunta VARCHAR(300),
+    IN textoPregunta VARCHAR(200)
+)
+BEGIN
+    DECLARE NumMax INT;
+    DECLARE NumSiguiente INT; 
+
+    SELECT MAX(numero_pregunta) INTO NumMax
+    FROM preguntas
+    WHERE id_capitulo = idCapitulo;
    
+
+    IF NumMax IS NULL THEN
+        SET NumSiguiente = 1;
+    ELSE
+        SET NumSiguiente = NumMax + 1;
+    END IF;
+
+    INSERT INTO  preguntas (id_capitulo, creado_en, actualizado_en, numero_pregunta, tipo_respuesta, comentario_pregunta, texto_pregunta) 
+    VALUES (idCapitulo, NOW(), NOW(),NumSiguiente,tipoRespuesta,comentarioPregunta,textoPregunta);
+END$$
+DELIMITER ;
+
+--procedure para actualizar los capitulos con su numero correspondiente
+
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS actualizarpregunta$$
+CREATE PROCEDURE  actualizarpregunta(
+    IN preguntaActualizar INT,
+    IN idcapitulo INT,
+    IN tipoRespuesta VARCHAR(100),
+    IN comentarioPregunta VARCHAR(300),
+    IN textoPregunta VARCHAR(200)
+)
+
+BEGIN
+    DECLARE NumMax INT;
+    DECLARE NumSiguiente INT;
+    DECLARE capitulonum INT;
+    DECLARE preguntaNumero INT;
+
+    SELECT MAX(numero_pregunta) INTO NumMax
+    FROM preguntas
+    WHERE id_capitulo   = idcapitulo;
+
+    SET NumSiguiente = NumMax + 1;
+
+    SELECT id_capitulo INTO capitulonum 
+    FROM preguntas
+    WHERE id = preguntaActualizar;
+
+    SELECT numero_capitulo INTO preguntaNumero
+    FROM preguntas
+    WHERE id = preguntaActualizar AND capitulonum = idcapitulo; 
+
+    IF capitulonum = idcapitulo THEN
+        UPDATE Preguntas 
+        SET id_capitulo = idcapitulo, actualizado_en = NOW(), tipo_respuesta = tipoRespuesta, numero_pregunta = preguntaNumero, comentario_pregunta = comentarioPregunta, texto_pregunta = textoPregunta 
+        WHERE id = preguntaActualizar;
+        
+    ELSE 
+        UPDATE Preguntas 
+        SET id_capitulo = idcapitulo, actualizado_en = NOW(), tipo_respuesta = tipoRespuesta, numero_pregunta = NumSiguiente, comentario_pregunta = comentarioPregunta, texto_pregunta = textoPregunta 
+        WHERE id = preguntaActualizar;
+        
+    END IF;
+
+END$$
+DELIMITER ;
+
+CALL CREATE PROCEDURE  actualizarpregunta(
+    IN preguntaActualizar INT,
+    IN idcapitulo INT,
+    IN tipoRespuesta VARCHAR(100),
+    IN comentarioPregunta VARCHAR(300),
+    IN textoPregunta VARCHAR(200)
+)

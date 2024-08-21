@@ -20,7 +20,7 @@ public class PreguntaRepository implements PreguntaService{
 
     @Override
     public void CreatePregunta(Pregunta pregunta) {
-        String sql = "INSERT INTO preguntas (id_capitulo, creado_en, actualizado_en, numero_pregunta, tipo_respuesta, comentario_pregunta, texto_pregunta) VALUES (?, NOW(), NOW(),?,?,?)";
+        String sql = "CALL validarnumeroPregunta(?,?,?,?)";
         try (Connection con = database.getConnection();
         PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, pregunta.getIdCapitulo());
@@ -33,7 +33,7 @@ public class PreguntaRepository implements PreguntaService{
 
             
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,  "verfica los datos ingresados y que el numero de pregunta sea unico");
+            JOptionPane.showMessageDialog(null,  "verfica los datos ingresados");
             e.printStackTrace();
         }
         
@@ -114,14 +114,14 @@ public class PreguntaRepository implements PreguntaService{
 
     @Override
     public void updatePregunta(Pregunta pregunta) {
-        String sql = "UPDATE Preguntas SET id_capitulo = ?, actualizado_en = NOW(), tipo_respuesta = ?, comentario_pregunta = ?, texto_pregunta = ? WHERE id = ?";
+        String sql = "CALL actualizarpregunta(?,?,?,?,?)";
         try (Connection con = database.getConnection();
         PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1,  pregunta.getIdCapitulo());
-            ps.setString(2, pregunta.getTipoRespuesta());
-            ps.setString(3, pregunta.getComentarioPregunta());
-            ps.setString(4, pregunta.getTextoPregunta());
-            ps.setInt(5, pregunta.getId());
+            ps.setInt(2,  pregunta.getIdCapitulo());
+            ps.setString(3, pregunta.getTipoRespuesta());
+            ps.setString(4, pregunta.getComentarioPregunta());
+            ps.setString(5, pregunta.getTextoPregunta());
+            ps.setInt(1, pregunta.getId());
 
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null,  "Pregunta actualizado con exito");
