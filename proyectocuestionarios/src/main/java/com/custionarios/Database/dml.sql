@@ -47,13 +47,13 @@ INSERT INTO capitulos (id_encuesta, creado_en, actualizado_en, numero_capitulo, 
 
 (1, '2024-09-01', '2024-09-15', '1', 'Información General'),
 
-(1, '2024-09-01', '2024-09-15', '1', 'Estado de Salud'),
+(1, '2024-09-01', '2024-09-15', '2', 'Estado de Salud'),
 
 (2, '2024-09-01', '2024-09-15', '1', 'Estado del sueño'),
 
-(3, '2024-10-01', '2024-10-20', '2', 'Hábitos Alimenticios'),
+(3, '2024-10-01', '2024-10-20', '1', 'Hábitos Alimenticios'),
 
-(4, '2024-12-20', '2024-12-30', '2', 'Nivel de Estrés');
+(4, '2024-12-20', '2024-12-30', '1', 'Nivel de Estrés');
 
 INSERT INTO preguntas (id_capitulo, creado_en, actualizado_en, numero_pregunta, tipo_respuesta, comentario_pregunta, texto_pregunta) VALUES
 
@@ -62,22 +62,22 @@ INSERT INTO preguntas (id_capitulo, creado_en, actualizado_en, numero_pregunta, 
 (1, '2024-09-01', '2024-09-15', '2', 'Escala de 1 a 5', 'Pregunta sobre el nivel de actividad física', '¿Cómo calificaría su nivel de actividad física?'),
 
 
-(2, '2024-09-01', '2024-09-15', '3', 'Escala de 1 a 5', 'Pregunta sobre la percepción de salud', '¿Cómo calificaría su percepción general de salud?'),
+(2, '2024-09-01', '2024-09-15', '1', 'Escala de 1 a 5', 'Pregunta sobre la percepción de salud', '¿Cómo calificaría su percepción general de salud?'),
 
-(2, '2024-09-01', '2024-09-15', '4', 'Sí/No', 'Pregunta sobre la presencia de enfermedades crónicas', '¿Padece alguna enfermedad crónica?'),
-
-
-(3, '2024-10-01', '2024-10-20', '5', 'Escala de 1 a 5', 'Pregunta abierta sobre calidad del sueño', '¿Cómo es la calidad de su sueño?'),
-
-(3, '2024-10-01', '2024-10-20', '6', 'Escala de 1 a 5', 'Pregunta sobre la regularidad del sueño', '¿Cómo calificaría la regularidad de su horario de sueño?'),
+(2, '2024-09-01', '2024-09-15', '2', 'Sí/No', 'Pregunta sobre la presencia de enfermedades crónicas', '¿Padece alguna enfermedad crónica?'),
 
 
-(4, '2024-10-01', '2024-10-20', '7', 'Escala de 1 a 5', 'Pregunta sobre la calidad de la alimentación', '¿Cómo calificaría la calidad de su alimentación?'),
+(3, '2024-10-01', '2024-10-20', '1', 'Escala de 1 a 5', 'Pregunta abierta sobre calidad del sueño', '¿Cómo es la calidad de su sueño?'),
 
-(4, '2024-10-01', '2024-10-20', '8', 'Texto', 'Pregunta abierta sobre problemas alimenticios', '¿Tiene algún problema alimenticio que desee mencionar?'),
+(3, '2024-10-01', '2024-10-20', '2', 'Escala de 1 a 5', 'Pregunta sobre la regularidad del sueño', '¿Cómo calificaría la regularidad de su horario de sueño?'),
 
 
-(5, '2024-12-20', '2024-12-30', '9', 'Escala de 1 a 5', 'Pregunta sobre nivel de estrés', '¿Cómo calificaría su nivel de estrés en las últimas semanas?');
+(4, '2024-10-01', '2024-10-20', '1', 'Escala de 1 a 5', 'Pregunta sobre la calidad de la alimentación', '¿Cómo calificaría la calidad de su alimentación?'),
+
+(4, '2024-10-01', '2024-10-20', '2', 'Texto', 'Pregunta abierta sobre problemas alimenticios', '¿Tiene algún problema alimenticio que desee mencionar?'),
+
+
+(5, '2024-12-20', '2024-12-30', '1', 'Escala de 1 a 5', 'Pregunta sobre nivel de estrés', '¿Cómo calificaría su nivel de estrés en las últimas semanas?');
 
 
 INSERT INTO opciones_respuesta (valor_opcion, id_categoria_catalogo, id_pregunta, creado_en, actualizado_en, tipo_componente_html, comentario_respuesta, texto_opcion) VALUES
@@ -133,3 +133,77 @@ INSERT INTO opciones_respuesta (valor_opcion, id_categoria_catalogo, id_pregunta
 (3, 6, 9, '2024-12-20', '2024-12-30', 'radio', 'Escala de nivel de estrés', 'Alto'),
 (4, 6, 9, '2024-12-20', '2024-12-30', 'radio', 'Escala de nivel de estrés', 'Muy alto');
 
+
+
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS validarnumerocapitulo$$
+CREATE PROCEDURE  validarnumerocapitulo(
+    IN idEncuesta INT,
+    IN titulocapitulo VARCHAR(100)
+)
+BEGIN
+    DECLARE NumMax INT;
+    DECLARE NumSiguiente INT;
+
+    SELECT MAX(numero_capitulo) INTO NumMax
+    FROM capitulos
+    WHERE id_encuesta = idEncuesta;
+   
+
+    SET NumSiguiente = NumMax + 1;
+
+    INSERT INTO capitulos (id_encuesta, creado_en, actualizado_en, numero_capitulo, titulo_capitulo)
+    VALUES (idEncuesta,NOW(),NOW(),NumSiguiente,titulocapitulo);
+END$$
+DELIMITER ;
+
+
+
+
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS actualizarcapitulo$$
+CREATE PROCEDURE  actualizarcapitulo(
+    IN idcapitulo INT,
+    IN idEncuesta INT,
+    IN titulocapitulo VARCHAR(100)
+)
+
+BEGIN
+    DECLARE NumMax INT;
+    DECLARE NumSiguiente INT;
+    DECLARE numcapituloactual INT;
+    DECLARE encuestanum INT;
+
+    SELECT MAX(numero_capitulo) INTO NumMax
+    FROM capitulos
+    WHERE id_encuesta = idEncuesta;
+
+    SET NumSiguiente = NumMax + 1;
+
+    SELECT id_encuesta INTO encuestanum 
+    FROM capitulos
+    WHERE id = idcapitulo;
+
+    SELECT numero_capitulo INTO numcapituloactual
+    FROM capitulos
+    WHERE id = idcapitulo AND id_encuesta = idEncuesta; 
+
+    IF encuestanum = idEncuesta THEN
+        UPDATE capitulos 
+        SET id_encuesta = idEncuesta, numero_capitulo = numcapituloactual ,titulo_capitulo = titulocapitulo
+        WHERE id = idcapitulo;
+    ELSE 
+        UPDATE capitulos 
+        SET id_encuesta = idEncuesta, numero_capitulo = NumSiguiente ,titulo_capitulo = titulocapitulo
+        WHERE id = idcapitulo;
+        
+    END IF;
+
+END$$
+DELIMITER ;
+
+
+
+   

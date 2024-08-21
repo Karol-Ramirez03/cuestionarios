@@ -27,7 +27,7 @@ public class ConsoleAdapterLogin {
         this.obtenerRol = new ObtenerRolUseCase(loginService);
     }
 
-
+    // reescribir el codigo si el usuario esta habilitado o no
     public void Start(){
         String user = JOptionPane.showInputDialog(null, "igrese el usuario");
         String password = JOptionPane.showInputDialog(null, "ingrese la contraseña");

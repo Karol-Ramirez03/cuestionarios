@@ -59,10 +59,9 @@ public class ConsoleAdapterCapitulo {
             
             try {  
                 int idEncuesta = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el id de la encuesta relacionada:"));   
-                String numeroCapitulo = JOptionPane.showInputDialog(null, "Escriba la descripcion de la Capitulo: ");
                 String tituloCapitulo = JOptionPane.showInputDialog(null, "Escriba el nombre de la Capitulo: ");
 
-                Capitulo capitulo = new Capitulo(idEncuesta, numeroCapitulo, tituloCapitulo);
+                Capitulo capitulo = new Capitulo(idEncuesta, tituloCapitulo);
                 createCap.execute(capitulo);
                 Start();
                 
@@ -162,9 +161,8 @@ public class ConsoleAdapterCapitulo {
                 while (bandera) {
                     String opcionesUpd = """
                         1. id encuesta
-                        2. numero Capitulo
-                        3. titulo Capitulo
-                        4. salir
+                        2. titulo Capitulo
+                        3. salir
                         """;
 
                     Optional<Integer> opc = Validaciones.mostrarOpciones(opcionesUpd,1,4);
@@ -180,16 +178,12 @@ public class ConsoleAdapterCapitulo {
                                 } catch (Exception e) {
                                     JOptionPane.showMessageDialog(null,  "problemas en el ingreso de datos,Vuelve a intentarlo");
                                     Start();
-                                }
-                                
+                                } 
                                 break;
                             case 2:
-                                CapituloUpd.setNumeroCapitulo(JOptionPane.showInputDialog(null," ingrese el numero del Capitulo: "));
-                                break;
-                            case 3:
                                 CapituloUpd.setTituloCapitulo(JOptionPane.showInputDialog(null," ingrese el titulo del Capitulo: "));
                                 break;
-                            case 4:
+                            case 3:
                                 bandera = false;
                                 break;
                             }

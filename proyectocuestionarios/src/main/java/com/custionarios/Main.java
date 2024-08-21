@@ -1,15 +1,22 @@
 package com.custionarios;
 
-import com.custionarios.capitulos.infrastructure.controller.ConsoleAdapterCapitulo;
-import com.custionarios.categoriasCatalogo.infrastructure.controller.ConsoleAdapterCategoriasCatalogo;
-import com.custionarios.encuestas.infrastructure.controller.ConsoleAdapterEncuesta;
-import com.custionarios.opcionesRespuestas.infrastructure.controller.ConsoleAdapterOpcionesRespuesta;
-import com.custionarios.preguntas.infrastructure.controller.ConsoleAdapterPregunta;
-import com.custionarios.respuesta.infrastructure.controller.ConsoleAdapterRespuesta;
-import com.custionarios.roles.infrastructure.controller.ConsoleAdapterRoles;
-import com.custionarios.subopcionRespuesta.infrastruture.controller.ConsoleAdapterSubOpcionesRespuesta;
-import com.custionarios.usuario_roles.infrastructure.controller.ConsoleAdapterUsuarioRol;
-import com.custionarios.usuarios.infrastructure.controtroller.ConsoleAdapterUsuario;
+// import javax.swing.JButton;
+// import javax.swing.JFrame;
+// import javax.swing.JOptionPane;
+// import javax.swing.JPanel;
+// import java.awt.GridLayout;
+
+import com.custionarios.GenerarCuestionarios.infrastructure.controller.ConsoleAdapterGenerarCuestionarios;
+// import com.custionarios.capitulos.infrastructure.controller.ConsoleAdapterCapitulo;
+// import com.custionarios.categoriasCatalogo.infrastructure.controller.ConsoleAdapterCategoriasCatalogo;
+// import com.custionarios.encuestas.infrastructure.controller.ConsoleAdapterEncuesta;
+// import com.custionarios.opcionesRespuestas.infrastructure.controller.ConsoleAdapterOpcionesRespuesta;
+// import com.custionarios.preguntas.infrastructure.controller.ConsoleAdapterPregunta;
+// import com.custionarios.respuesta.infrastructure.controller.ConsoleAdapterRespuesta;
+// import com.custionarios.roles.infrastructure.controller.ConsoleAdapterRoles;
+// import com.custionarios.subopcionRespuesta.infrastruture.controller.ConsoleAdapterSubOpcionesRespuesta;
+// import com.custionarios.usuario_roles.infrastructure.controller.ConsoleAdapterUsuarioRol;
+// import com.custionarios.usuarios.infrastructure.controtroller.ConsoleAdapterUsuario;
 
 public class Main {
     public static void main(String[] args) {
@@ -29,8 +36,8 @@ public class Main {
         // ConsoleAdapterRespuesta menuRespuesta = new ConsoleAdapterRespuesta();
         // menuRespuesta.Start();
 
-        ConsoleAdapterPregunta menuPregunta = new ConsoleAdapterPregunta();
-        menuPregunta.Start();
+        // ConsoleAdapterPregunta menuPregunta = new ConsoleAdapterPregunta();
+        // menuPregunta.Start();
 
         // ConsoleAdapterOpcionesRespuesta menuOpcionesRespuesta = new ConsoleAdapterOpcionesRespuesta();
         // menuOpcionesRespuesta.Start();
@@ -43,5 +50,9 @@ public class Main {
 
         // ConsoleAdapterCapitulo menuCapitulo = new ConsoleAdapterCapitulo();
         // menuCapitulo.Start();
+
+        ConsoleAdapterGenerarCuestionarios encuesta = new ConsoleAdapterGenerarCuestionarios();
+        encuesta.Start();
+
     }                      
 }

@@ -11,9 +11,8 @@ public class Capitulo {
     private String tituloCapitulo;
 
     
-    public Capitulo(int idEncuesta, String numeroCapitulo, String tituloCapitulo) {
+    public Capitulo(int idEncuesta,  String tituloCapitulo) {
         this.idEncuesta = idEncuesta;
-        this.numeroCapitulo = numeroCapitulo;
         this.tituloCapitulo = tituloCapitulo;
     }
 

@@ -19,12 +19,11 @@ public class CapituloRepository implements CapituloService{
 
     @Override
     public void CreateCapitulo(Capitulo capitulo) {
-        String sql = "INSERT INTO capitulos (id_encuesta, creado_en, actualizado_en, numero_capitulo, titulo_capitulo) VALUES (?,NOW(),NOW(),?,?)";
+        String sql = "CALL validarnumerocapitulo(?,?)";
         try (Connection con = database.getConnection();
         PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, capitulo.getIdEncuesta());
-            ps.setString(2, capitulo.getNumeroCapitulo());
-            ps.setString(3, capitulo.getTituloCapitulo());
+            ps.setString(2, capitulo.getTituloCapitulo());
 
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null,  "Capitulos agregado con exito");
@@ -104,15 +103,15 @@ public class CapituloRepository implements CapituloService{
         }
     }
 
+
     @Override
     public void updateCapitulo(Capitulo capitulo) {
-        String sql = "UPDATE capitulos SET id_encuesta = ?, actualizado_en = NOW(), numero_capitulo = ?, titulo_capitulo = ? WHERE id = ?";
+        String sql = "CALL actualizarcapitulo(?,?,?);";
         try (Connection con = database.getConnection();
         PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, capitulo.getIdEncuesta());
-            ps.setString(2, capitulo.getNumeroCapitulo());
+            ps.setInt(2, capitulo.getIdEncuesta());
             ps.setString(3, capitulo.getTituloCapitulo());
-            ps.setInt(4, capitulo.getId());
+            ps.setInt(1, capitulo.getId());
 
 
             ps.executeUpdate();
