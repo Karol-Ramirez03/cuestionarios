@@ -5,7 +5,7 @@ import java.util.Optional;
 import com.custionarios.Login.domain.entity.Login;
 
 public interface LoginService { 
-    public Optional<Integer> validarusuario(String user, String contraseña);
+    public Optional<Login>  validarusuario(String user, String contraseña);
     public void guardarusuario(Login usuario); 
     public Optional<Integer> roles(int id);
 

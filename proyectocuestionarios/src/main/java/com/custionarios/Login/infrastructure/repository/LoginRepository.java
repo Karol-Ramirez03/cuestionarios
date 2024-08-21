@@ -32,7 +32,7 @@ public class LoginRepository implements LoginService{
         
     }
     @Override 
-    public Optional<Integer> validarusuario(String user, String contraseña) {
+    public Optional<Login> validarusuario(String user, String contraseña) {
         String sql = "SELECT id, habilitado FROM usuarios WHERE nombre_usuario = ? AND contraseña = ?";
         try (Connection con = database.getConnection();
         PreparedStatement ps = con.prepareStatement(sql)) {
@@ -42,7 +42,9 @@ public class LoginRepository implements LoginService{
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int idusuario = rs.getInt("id");
-                return Optional.of(idusuario);
+                boolean idusuarioh = rs.getBoolean("habilitado");
+                Login usuariohabilitado = new Login(idusuario, idusuarioh);
+                return Optional.of(usuariohabilitado);
                 
             }
 

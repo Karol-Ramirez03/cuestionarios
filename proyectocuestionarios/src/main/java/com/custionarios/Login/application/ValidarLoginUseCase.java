@@ -2,6 +2,7 @@ package com.custionarios.Login.application;
 
 import java.util.Optional;
 
+import com.custionarios.Login.domain.entity.Login;
 import com.custionarios.Login.domain.service.LoginService;
 
 public class ValidarLoginUseCase {
@@ -11,7 +12,7 @@ public class ValidarLoginUseCase {
         this.loginService = loginService;
     }
 
-    public Optional<Integer> execute(String user, String contraseña){
+    public Optional<Login> execute(String user, String contraseña){
         return loginService.validarusuario(user, contraseña);
     }
 }

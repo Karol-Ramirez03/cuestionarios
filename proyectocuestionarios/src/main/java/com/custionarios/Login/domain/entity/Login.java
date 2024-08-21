@@ -3,6 +3,14 @@ package com.custionarios.Login.domain.entity;
 public class Login {
     private String password;
     private String user;
+    private int idrol;
+    private boolean idhabilitado;
+
+
+    public Login(int idrol, boolean idhabilitado) {
+        this.idrol = idrol;
+        this.idhabilitado = idhabilitado;
+    }
 
     public Login(String password, String user) {
         this.password = password;
@@ -23,6 +31,22 @@ public class Login {
 
     public void setUser(String user) {
         this.user = user;
+    }
+
+    public int getIdrol() {
+        return idrol;
+    }
+
+    public void setIdrol(int idrol) {
+        this.idrol = idrol;
+    }
+
+    public boolean isIdhabilitado() {
+        return idhabilitado;
+    }
+
+    public void setIdhabilitado(boolean idhabilitado) {
+        this.idhabilitado = idhabilitado;
     }
 
     
