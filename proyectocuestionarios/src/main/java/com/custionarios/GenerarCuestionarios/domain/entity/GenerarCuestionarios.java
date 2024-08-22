@@ -5,6 +5,11 @@ public class GenerarCuestionarios {
     private int indice;
     private String nombre;
     
+    
+    public GenerarCuestionarios(int id) {
+        this.id = id;
+    }
+
     public GenerarCuestionarios(int id, int indice, String nombre) {
         this.id = id;
         this.indice = indice;
