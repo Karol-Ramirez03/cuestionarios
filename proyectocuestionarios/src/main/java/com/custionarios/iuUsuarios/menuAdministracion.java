@@ -29,7 +29,7 @@ public class menuAdministracion {
                     9. Administrar Categorias
                     10. Administrar Capitulos
                     """;
-        Optional<Integer> opcion = Validaciones.mostrarOpciones(opciones,1,6);
+        Optional<Integer> opcion = Validaciones.mostrarOpciones(opciones,1,10);
 
         if (opcion.isPresent()) {
             int numero = opcion.get();

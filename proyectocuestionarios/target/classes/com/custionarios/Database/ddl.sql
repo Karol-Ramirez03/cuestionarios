@@ -118,3 +118,25 @@ CREATE TABLE respuestas (
     CONSTRAINT fk_respuestas_pregunta FOREIGN KEY (id_pregunta) REFERENCES preguntas(id),
     CONSTRAINT fk_respuestas_subopcion FOREIGN KEY (id_subrespuesta) REFERENCES subopciones_respuesta(id)
 );
+
+--consulta para tener las preguntas
+SELECT p.numero_pregunta, p.texto_pregunta
+FROM preguntas p
+JOIN capitulos c ON p.id_capitulo = c.id
+WHERE id_encuesta = ? AND  c.numero_capitulo = ?;
+
+--consulta para obtener opciones 
+SELECT *
+FROM preguntas p
+JOIN capitulos c ON p.id_capitulo = c.id
+WHERE id_encuesta = 1 AND  c.numero_capitulo = 2;
+
+SELECT or1.id_pregunta AS numpreguntapadre
+FROM opciones_respuesta or2 
+JOIN opciones_respuesta or1 ON or2.id_opcion_padre = or1.id
+WHERE or2.id = (
+    SELECT p.id
+    FROM preguntas p 
+    JOIN capitulos c ON c.id = p.id_capitulo
+    WHERE p.numero_pregunta = ? AND  c.numero_capitulo = ? AND c.id_encuesta = ?);
+

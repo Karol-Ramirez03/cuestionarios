@@ -1,9 +1,16 @@
 package com.custionarios.GenerarCuestionarios.domain.entity;
 
 public class GenerarCuestionarios {
+    private int id;
     private int indice;
     private String nombre;
     
+    public GenerarCuestionarios(int id, int indice, String nombre) {
+        this.id = id;
+        this.indice = indice;
+        this.nombre = nombre;
+    }
+
     public GenerarCuestionarios(int indice, String nombre) {
         this.indice = indice;
         this.nombre = nombre;
@@ -23,6 +30,14 @@ public class GenerarCuestionarios {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     

@@ -53,42 +53,56 @@ public class GenerarCuestionariosRepository implements GenerarCuestionariosServi
             }
             
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "¡Error!, vuelve a intenntarlo ");
+            JOptionPane.showMessageDialog(null, "¡Error!, vuelve a intenntarlo 1 ");
             e.printStackTrace();
         }
         return capitulos;
     }
 
     @Override
-    public List<GenerarCuestionarios> mostrar_preguntas(int capituloid) {
-        String sql = "SELECT numero_pregunta, texto_pregunta FROM preguntas WHERE id_capitulo = ?";
+    public Optional<List<GenerarCuestionarios>> mostrar_preguntas(int numcapitulo, int idencuesta) {
+        String sql = "SELECT P.id, p.numero_pregunta, p.texto_pregunta FROM preguntas p JOIN capitulos c ON p.id_capitulo = c.id WHERE c.id_encuesta = ? AND  c.numero_capitulo = ?";
         List<GenerarCuestionarios> capitulos = new ArrayList<>();
         try (Connection connection = database.getConnection();
         PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, capituloid);
+            ps.setInt(2, numcapitulo);
+            ps.setInt(1, idencuesta);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int numero_pregunta = rs.getInt("numero_pregunta");
                 String texto_pregunta = rs.getString("texto_pregunta");
+                int idpregunta = rs.getInt("id");
                  
-                GenerarCuestionarios capitulo = new GenerarCuestionarios(numero_pregunta, texto_pregunta);
+                GenerarCuestionarios capitulo = new GenerarCuestionarios(idpregunta, numero_pregunta, texto_pregunta);
                 capitulos.add(capitulo);
             }
-            
+            return Optional.of(capitulos);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "¡Error!, vuelve a intenntarlo ");
+            JOptionPane.showMessageDialog(null, "¡Error!, vuelve a intenntarlo 0");
             e.printStackTrace();
         }
-        return capitulos;
+        return Optional.empty();
     }
 
     @Override
-    public Optional<List<GenerarCuestionarios>> mostrar_opciones(int pregunta) {
-        String sql = "SELECT valor_opcion, texto_opcion FROM opciones_respuesta WHERE id_pregunta = ?";
+    public Optional<List<GenerarCuestionarios>> mostrar_opciones(int numpregunta,int numCap, int idEncuesta) {
+        String sql = """
+                    SELECT valor_opcion, texto_opcion
+                    FROM opciones_respuesta
+                    WHERE id_pregunta = (
+                        SELECT p.id
+                        FROM preguntas p 
+                        JOIN capitulos c ON c.id = p.id_capitulo
+                        WHERE p.numero_pregunta = ? AND  c.numero_capitulo = ? AND c.id_encuesta = ?
+                    )
+                
+                """;
         List<GenerarCuestionarios> capitulos = new ArrayList<>();
         try (Connection connection = database.getConnection();
         PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, pregunta);
+            ps.setInt(1, numpregunta);
+            ps.setInt(2, numCap);
+            ps.setInt(3, idEncuesta);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int numero_pregunta = rs.getInt("valor_opcion");
@@ -102,7 +116,7 @@ public class GenerarCuestionariosRepository implements GenerarCuestionariosServi
             }
             return Optional.of(capitulos);       
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "¡Error!, vuelve a intenntarlo ");
+            JOptionPane.showMessageDialog(null, "¡Error!, vuelve a intenntarlo 2");
             e.printStackTrace();
         }
         
@@ -129,7 +143,7 @@ public class GenerarCuestionariosRepository implements GenerarCuestionariosServi
             }
             return Optional.of(capitulos);       
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "¡Error!, vuelve a intentarlo ");
+            JOptionPane.showMessageDialog(null, "¡Error!, vuelve a intentarlo 33");
             e.printStackTrace();
         }
         
@@ -137,15 +151,27 @@ public class GenerarCuestionariosRepository implements GenerarCuestionariosServi
     }
 
     @Override
-    public Optional<Integer>  mostraopciondelosidpadres(int opc) {
-        String sql = " SELECT or1.id_pregunta AS id_padre FROM opciones_respuesta or2 JOIN opciones_respuesta or1 ON or2.id_opcion_padre = or1.id WHERE id= ?";
+    public Optional<Integer>  mostraopciondelosidpadres(int numpregunta,int numCap, int idEncuesta) {
+        String sql = """
+                SELECT or1.id_pregunta AS numpreguntapadre
+                FROM opciones_respuesta or2 
+                JOIN opciones_respuesta or1 ON or2.id_opcion_padre = or1.id
+                WHERE or1.id = (
+                    SELECT p.id
+                    FROM preguntas p 
+                    JOIN capitulos c ON c.id = p.id_capitulo
+                    WHERE p.numero_pregunta = ? AND  c.numero_capitulo = ? AND c.id_encuesta = ?);
+
+                """;
         try (Connection connection = database.getConnection();
         PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, opc);
+            ps.setInt(1, numpregunta);
+            ps.setInt(2, numCap);
+            ps.setInt(3, idEncuesta);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                rs.getInt("or1.id_pregunta");
-                return Optional.of(null);      
+                int id = rs.getInt("numpreguntapadre");
+                return Optional.of(id);      
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "¡Error!, vuelve a intentarlo ");
@@ -155,11 +181,35 @@ public class GenerarCuestionariosRepository implements GenerarCuestionariosServi
         return Optional.empty();
     }
 
+    public  Optional<List<GenerarCuestionarios>> mostrarpreguntaporId(int id){
+        String sql = "SELECT numero_pregunta,texto_pregunta FROM preguntas  WHERE id = ? ";
+        List<GenerarCuestionarios> preguntas = new ArrayList<>();
+        try (Connection connection = database.getConnection();
+        PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1,id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int numero_pregunta = rs.getInt("numero_pregunta");
+                String texto = rs.getString("texto_pregunta");
+                GenerarCuestionarios pregunta = new GenerarCuestionarios(numero_pregunta, texto);
+                preguntas.add(pregunta);
+                return Optional.of(preguntas);      
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "¡Error!, vuelve a intentarlo ");
+            e.printStackTrace();
+        }
+        return Optional.empty();
+    }
+
+
     @Override
     public void guardar_respuesta() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'guardar_respuesta'");
     }
+
+    
     
     
 }

@@ -6,14 +6,15 @@ import java.util.Optional;
 import com.custionarios.GenerarCuestionarios.domain.entity.GenerarCuestionarios;
 import com.custionarios.GenerarCuestionarios.domain.service.GenerarCuestionariosService;
 
-public class MostrarPreguntasUseCase {
+public class MostrarPreguntaByIdUseCase {
     private GenerarCuestionariosService generarCuestionariosService;
 
-    public MostrarPreguntasUseCase(GenerarCuestionariosService generarCuestionariosService) {
+    public MostrarPreguntaByIdUseCase(GenerarCuestionariosService generarCuestionariosService) {
         this.generarCuestionariosService = generarCuestionariosService;
     }
-
-    public Optional<List<GenerarCuestionarios>> execute(int numcapitulo, int idencuesta){
-        return generarCuestionariosService.mostrar_preguntas(numcapitulo,idencuesta);
+    
+    public  Optional<List<GenerarCuestionarios>> execute(int id){
+        return generarCuestionariosService.mostrarpreguntaporId(id);
     }
+
 }

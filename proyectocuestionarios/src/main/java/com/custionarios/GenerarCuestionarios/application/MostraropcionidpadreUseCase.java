@@ -11,8 +11,8 @@ public class MostraropcionidpadreUseCase {
         this.generarCuestionariosService = generarCuestionariosService;
     }
 
-    public Optional<Integer>  execute(int opc){
-        return generarCuestionariosService.mostraopciondelosidpadres(opc);
+    public Optional<Integer> execute(int numpregunta,int numCap, int idEncuesta){
+        return generarCuestionariosService.mostraopciondelosidpadres(numpregunta,numCap,idEncuesta);
     }
 }
 
