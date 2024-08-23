@@ -450,7 +450,8 @@ public class GenerarCuestionariosRepository implements GenerarCuestionariosServi
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 String texto = rs.getString("texto_opcion");
-                return Optional.of(texto);
+                return Optional.ofNullable(texto);
+                //el ofnullabel es para la posibilidad de que este null el campo
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "¡Error!, vuelve a intenntarlo p");
