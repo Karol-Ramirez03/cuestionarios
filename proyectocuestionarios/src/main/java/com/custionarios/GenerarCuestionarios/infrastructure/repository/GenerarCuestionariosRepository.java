@@ -124,16 +124,30 @@ public class GenerarCuestionariosRepository implements GenerarCuestionariosServi
     }
 
     @Override
-    public Optional<List<GenerarCuestionarios>> mostrar_subopciones(int opc) {
-        String sql = "SELECT numero_subopcion, texto_subopcion FROM subopciones_respuesta WHERE id_opcion_respuesta = ?";
+    public Optional<List<GenerarCuestionarios>> mostrar_subopciones(int idEncuesta,int numCapitulo, int numPreg, int valorOpc) {
+        String sql = """
+                SELECT so.id AS subopcion_id, so.texto_subopcion AS texto
+                FROM subopciones_respuesta so
+                JOIN opciones_respuesta or2 ON so.id_opcion_respuesta = or2.id
+                JOIN preguntas p ON or2.id_pregunta = p.id
+                JOIN capitulos c ON p.id_capitulo = c.id
+                WHERE c.id_encuesta = ?
+                AND c.numero_capitulo = ?
+                AND p.numero_pregunta = ?
+                AND or2.valor_opcion = ?;
+
+                """;
         List<GenerarCuestionarios> capitulos = new ArrayList<>();
         try (Connection connection = database.getConnection();
         PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, opc);
+            ps.setInt(1, idEncuesta);
+            ps.setInt(2, numCapitulo);
+            ps.setInt(3, numPreg);
+            ps.setInt(4, valorOpc);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                int numero_subopcion = rs.getInt("numero_subopcion");
-                String texto_subopcion = rs.getString("texto_subopcion");
+                int numero_subopcion = rs.getInt("subopcion_id");
+                String texto_subopcion = rs.getString("texto");
                  
                 GenerarCuestionarios capitulo = new GenerarCuestionarios(numero_subopcion, texto_subopcion);
                 capitulos.add(capitulo);
@@ -363,7 +377,87 @@ public class GenerarCuestionariosRepository implements GenerarCuestionariosServi
                return Optional.empty();
     }
 
-    
+
+    public int retornaridSubOpcion(int idEncuesta, int numCap,int numPreg,int valorOpc,int numSubOpcion) {
+        int numpregunta = 0;
+        String sql = """
+                SELECT so.id AS subopcion_id
+            FROM subopciones_respuesta so
+            JOIN opciones_respuesta or2 ON so.id_opcion_respuesta = or2.id
+            JOIN preguntas p ON or2.id_pregunta = p.id
+            JOIN capitulos c ON p.id_capitulo = c.id
+            WHERE c.id_encuesta = ?             
+            AND c.numero_capitulo = ?         
+            AND p.numero_pregunta = ?        
+            AND or2.valor_opcion = ?           
+            AND so.numero_subopcion = ?;  
+
+                """;
+             try (Connection connection = database.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+                    ps.setInt(1, idEncuesta);
+                    ps.setInt(2, numCap);
+                    ps.setInt(3, numPreg);
+                    ps.setInt(4, valorOpc);
+                    ps.setInt(5, numSubOpcion);
+                    ResultSet rs = ps.executeQuery();
+                    while (rs.next()) {
+                         numpregunta = rs.getInt("subopcion_id");
+                         return numpregunta;
+                    }      
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "¡Error!, vuelve a intenntarlo lo");
+                    e.printStackTrace();
+                }
+                return numpregunta;
+     }
+
+
+     public int retornaridSubOpcionPorvalor(int idOpcion, int valorSub){
+        int numpregunta = 0;
+        String sql = """
+                SELECT so.id AS subopcion_id 
+                FROM subopciones_respuesta so 
+                JOIN opciones_respuesta or2 ON so.id_opcion_respuesta = or2.id 
+                WHERE or2.id = ? AND so.numero_subopcion = ?; 
+
+
+                """;
+
+             try (Connection connection = database.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+                    ps.setInt(1, idOpcion);
+                    ps.setInt(2, valorSub);
+                    ResultSet rs = ps.executeQuery();
+                    while (rs.next()) {
+                        numpregunta = rs.getInt("subopcion_id");
+                         return numpregunta;
+                    }     
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "¡Error!, vuelve a intenntarlo lo");
+                    e.printStackTrace();
+                }
+                return numpregunta;
+                
+     }
+
+    @Override
+    public Optional<String> preguntaabierta(int id) {
+        String sql =" SELECT texto_opcion FROM opciones_respuesta WHERE id = ?";
+        try (Connection connection = database.getConnection();
+        PreparedStatement ps = connection.prepareStatement(sql)){
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String texto = rs.getString("texto_opcion");
+                return Optional.of(texto);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "¡Error!, vuelve a intenntarlo p");
+            e.printStackTrace();
+        }
+        return Optional.empty();
+    }
     
     
 }

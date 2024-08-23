@@ -36,7 +36,8 @@ INSERT INTO categorias_catalogo (creado_en, actualizado_en, nombre) VALUES
 ('2024-12-01', '2024-12-01', 'Frecuencia de calidad de alimentacion'),
 ('2024-12-20', '2024-12-20', 'Escala de nivel de estrés'),
 ('2024-09-01', '2024-09-01', 'presencia de enfermedades cronica'),
-('2024-09-01', '2024-09-01', 'regularidad del Sueño');
+('2024-09-01', '2024-09-01', 'regularidad del Sueño'),
+('2024-09-01', '2024-09-01', 'Antecedentes medicos');
 
 
 INSERT INTO encuestas (creado_en, actualizado_en, descripcion, nombre) VALUES 
@@ -84,6 +85,8 @@ INSERT INTO preguntas (id_capitulo, creado_en, actualizado_en, numero_pregunta, 
 
 
 INSERT INTO opciones_respuesta (valor_opcion, id_categoria_catalogo, id_pregunta, creado_en, actualizado_en, tipo_componente_html, comentario_respuesta, texto_opcion) VALUES
+(1, 9, 1, '2024-09-01', '2024-09-15', 'radio', 'Escala de actividad física', NULL),
+
 
 (1, 2, 2, '2024-09-01', '2024-09-15', 'radio', 'Escala de actividad física', 'Muy bajo'),
 (2, 2, 2, '2024-09-01', '2024-09-15', 'radio', 'Escala de actividad física', 'Bajo'),
@@ -135,9 +138,12 @@ INSERT INTO opciones_respuesta (valor_opcion, id_categoria_catalogo, id_pregunta
 (3, 6, 9, '2024-12-20', '2024-12-30', 'radio', 'Escala de nivel de estrés', 'Alto'),
 (4, 6, 9, '2024-12-20', '2024-12-30', 'radio', 'Escala de nivel de estrés', 'Muy alto');
 
+INSERT INTO opciones_respuesta (valor_opcion, id_categoria_catalogo, id_pregunta, creado_en, actualizado_en, tipo_componente_html, id_opcion_padre , comentario_respuesta, texto_opcion) VALUES
+(3, 7, 4, '2024-09-01', '2024-09-15', 'radio', 3, 'Escala de salud', 'nose');
+
 INSERT INTO subopciones_respuesta (numero_subopcion, creado_en, actualizado_en, id_opcion_respuesta, componente_html, texto_subopcion) VALUES
-(1, '2024-09-02 10:00:00', '2024-09-02 10:00:00', 1, 'checkbox', 'practico poco porque no tengo los recursos'),
-(2, '2024-09-02 10:00:00', '2024-09-02 10:00:00', 1, 'checkbox', 'practico poco porque me da pereza');
+(1, '2024-09-02 10:00:00', '2024-09-02 10:00:00', 2, 'checkbox', 'practico poco porque no tengo los recursos'),
+(2, '2024-09-02 10:00:00', '2024-09-02 10:00:00', 2, 'checkbox', 'practico poco porque me da pereza');
 
 --procedure para guardar los capitulos con su numero correspondiente
 

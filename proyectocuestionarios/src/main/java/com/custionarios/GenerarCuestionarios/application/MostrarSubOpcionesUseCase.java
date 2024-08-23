@@ -13,8 +13,8 @@ public class MostrarSubOpcionesUseCase {
         this.generarCuestionariosService = generarCuestionariosService;
     }
     
-    public Optional<List<GenerarCuestionarios>> execute(int opc){
-        return generarCuestionariosService.mostrar_subopciones(opc);
+    public Optional<List<GenerarCuestionarios>> execute(int idEncuesta,int numCapitulo, int numPreg, int valorOpc){
+        return generarCuestionariosService.mostrar_subopciones(idEncuesta,numCapitulo,numPreg,valorOpc);
     }
 
 }

@@ -17,6 +17,9 @@ import com.custionarios.GenerarCuestionarios.application.ObtenerIdOpcionUseCase;
 import com.custionarios.GenerarCuestionarios.application.ObtenerOpcionesByIdUsecase;
 import com.custionarios.GenerarCuestionarios.application.ObtenerPreguntaHijaUseCase;
 import com.custionarios.GenerarCuestionarios.application.ObtenerSubOpcionesByIdUseCase;
+import com.custionarios.GenerarCuestionarios.application.RetornaIdSubOpcionesUseCase;
+import com.custionarios.GenerarCuestionarios.application.RetornarIdSubOpcionPorValorUseCase;
+import com.custionarios.GenerarCuestionarios.application.preguntaAbiertaUseCase;
 import com.custionarios.GenerarCuestionarios.domain.entity.GenerarCuestionarios;
 import com.custionarios.GenerarCuestionarios.domain.service.GenerarCuestionariosService;
 import com.custionarios.GenerarCuestionarios.infrastructure.repository.GenerarCuestionariosRepository;
@@ -49,6 +52,9 @@ public class ConsoleAdapterGenerarCuestionarios {
     private ObtenerIdOpcionUseCase opcionIdCase;
     private ObtenerSubOpcionesByIdUseCase subopcionByid;
     private ObtenerIdOpcionByValorUseCase idOpcionValor;
+    private RetornaIdSubOpcionesUseCase retornarSubOpcion;
+    private RetornarIdSubOpcionPorValorUseCase retornarSubValor;
+    private preguntaAbiertaUseCase preguntaAbierta;
 
     
 
@@ -68,6 +74,9 @@ public class ConsoleAdapterGenerarCuestionarios {
         this.opcionIdCase = new ObtenerIdOpcionUseCase(generarCuestionariosService);
         this.subopcionByid = new ObtenerSubOpcionesByIdUseCase(generarCuestionariosService);
         this.idOpcionValor = new ObtenerIdOpcionByValorUseCase(generarCuestionariosService);
+        this.retornarSubOpcion = new RetornaIdSubOpcionesUseCase(generarCuestionariosService);
+        this.retornarSubValor = new RetornarIdSubOpcionPorValorUseCase(generarCuestionariosService);
+        this.preguntaAbierta = new preguntaAbiertaUseCase(generarCuestionariosService);
     }
 
     public int validarnumeros(int numeromax, String opcionelegida) {
@@ -148,6 +157,7 @@ public class ConsoleAdapterGenerarCuestionarios {
             List<GenerarCuestionarios> opcion = opciones.get();
             for (GenerarCuestionarios opc : opcion) {
                 st.append(opc.getIndice()).append(" - ").append(opc.getNombre()).append("\n"); 
+                
             }
             st.append(opcion.size()+1).append(" - ").append("salir");
             String data = JOptionPane.showInputDialog(null,st);
@@ -205,6 +215,22 @@ public class ConsoleAdapterGenerarCuestionarios {
         }
         return Optional.empty();
     }
+    public Optional<Integer> mostrarSubOpciones(int idEncuesta,int numCapitulo, int numPreg, int valorOpc){
+        StringBuilder st = new StringBuilder();
+         Optional<List<GenerarCuestionarios>> opciones = mostrarSub.execute(idEncuesta, numCapitulo, numPreg, valorOpc);
+        if (opciones.isPresent()) {
+            List<GenerarCuestionarios> opcion = opciones.get();
+            for (GenerarCuestionarios opc : opcion) {
+                st.append(opc.getIndice()).append(" - ").append(opc.getNombre()).append("\n"); 
+            }
+            st.append(opcion.size()+1).append(" - ").append("salir");
+            String data = JOptionPane.showInputDialog(null,st);
+            int numero = validarnumeros(opcion.size()+1, data);
+            return Optional.of(numero);
+            
+        }
+        return Optional.empty();
+    }
 
     public void ImprimirPreguntasHijas(int id_encuesta,int numero_capitulo, int numero_pregunta, int valor_opcion){
         Optional<List<GenerarCuestionarios>> idopciones = GetIdOpcion.execute(id_encuesta, numero_capitulo, numero_pregunta, valor_opcion);
@@ -212,12 +238,13 @@ public class ConsoleAdapterGenerarCuestionarios {
             List<GenerarCuestionarios> findOpciones = idopciones.get();
             for (GenerarCuestionarios idopc : findOpciones) {
                 int ids = idopc.getId(); 
-                imprimirpreguntaid(ids);
+             //error aqui
                 Optional<List<GenerarCuestionarios>> preguntas = GetPreguntaHija.execute(ids);
                 if (preguntas.isPresent()) { //me deberia retornar las preguntas
                     List<GenerarCuestionarios>  hacerPreguntas = preguntas.get();
                     for (GenerarCuestionarios preg : hacerPreguntas) {
                         int idpregunta = preg.getId();
+                        imprimirpreguntaid(idpregunta);
                         //numero pregunta 
                         Optional<Integer> opcionNum = mostraropcionesbyid(idpregunta);
                         // numero de opcion elegida
@@ -225,26 +252,25 @@ public class ConsoleAdapterGenerarCuestionarios {
                             int valor = opcionNum.get();
                             Optional<Integer>  opcion = idOpcionValor.execute(idpregunta, valor);
                             if (opcion.isPresent()) {
-                                int idopcion = opcion.get();
+                                int idopcion = opcion.get(); // ME DA EL ID DE LA OPCION
                                 Optional<Integer> subopcion = mostrasubopcionesByid(idopcion);
-                                //logica para guardar subopcion
-                                /*
-                                 * 
-                                 * 
-                                 * 
-                                 * 
-                                 *
-                                 * /
-                            } else {
-                                //logica para guarda la opcion
-                                /**
-                                 * 
-                                 * 
-                                 * 
-                                 * 
-                                 * 
-                                 * 
-                                 * */
+                                if (subopcion.isPresent()) {
+                                    int idSub = subopcion.get();
+                                    int idSubopcion = retornarSubValor.execute(idopcion, idSub);
+                                    //logica para guardar subopcion "esto retorna el numero"
+                                    /*
+                                     * 
+                                     *
+                                     * */
+
+                                    
+                                } else {
+                                    //idopcion logica guardar
+                                    
+                                    //LE PASO ID "OPCION " SI OPCION ES NULL O VACIA RETORNA TRUE Y HABRE UN INPUT
+
+                                }
+                            
                             }
                             
                         }
@@ -258,7 +284,7 @@ public class ConsoleAdapterGenerarCuestionarios {
         } else{
             // logicaa de buscar subopciones 
             // logica de guardar opcion 
-            //creo que no hay logica
+            //creo que no nesecita logica
             return;
         }
 
@@ -289,7 +315,41 @@ public class ConsoleAdapterGenerarCuestionarios {
             Optional<Integer> numeroopc = imprimiropciones(numerocap, numeroPreg, idencuesta);
             if (numeroopc.isPresent()) {
                 int valoropcion = numeroopc.get();
+                //si valor opcion es 
                 ImprimirPreguntasHijas(idencuesta, numerocap, numeroPreg,valoropcion);
+                Optional<Integer> valorOpcion = mostrarSubOpciones(idencuesta, numerocap, numeroPreg, valoropcion);//CREO QUE RETORNA EL VALOR DE LA OPCION
+                if (valorOpcion.isPresent()) {
+                    int Opcion = valorOpcion.get();
+                    int idSub = retornarSubOpcion.execute(idencuesta, numerocap, numeroPreg, valoropcion, Opcion);//EL ID DE LA SUBOPCION
+
+                    //guardar subopcion
+                } else {
+                    Optional<List<GenerarCuestionarios>> idOpc = GetIdOpcion.execute(idencuesta, numerocap, numeroPreg, valoropcion); //retorna el id de la opcion
+                    if (idOpc.isPresent()) {
+                        List<GenerarCuestionarios> listaids = idOpc.get();
+                        for (GenerarCuestionarios opc : listaids) {
+                            int opcion = opc.getId();
+
+                            Optional<String> Stringvalidar = preguntaAbierta.execute(opcion);
+                            if (Stringvalidar.isPresent()) {
+                                String validar = Stringvalidar.get();
+                                if (validar == null ) {
+                                    String respuestaABIERTA = JOptionPane.showInputDialog(null,"escriba su respuesta");
+                                }
+                                
+                            } else {
+                                // guardar opcion de tipo id 
+
+                            }
+
+                            //logicca de guardar 
+                            //LE PASO ID "OPCION " SI OPCION ES NULL O VACIA RETORNA TRUE Y HABRE UN INPUT
+                        }
+                        
+                    }
+                    //guardar opcion
+                    
+                }
                 
             }
          }
