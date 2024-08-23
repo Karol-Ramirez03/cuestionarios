@@ -105,7 +105,7 @@ public class ConsoleAdapterPregunta {
                     String numeroPregunta = Pregunta.getNumeroPregunta();
                     String tipoRespuesta = Pregunta.getTipoRespuesta();
                     String comentarioPregunta = Pregunta.getComentarioPregunta();
-                    String textoPregunta = Pregunta.getComentarioPregunta();
+                    String textoPregunta = Pregunta.getTextoPregunta();
 
                     mensaje.append("ID: ").append(id).append("\n")
                     .append("id Capitulo: ").append(idCapitulo).append(", ")
@@ -176,11 +176,10 @@ public class ConsoleAdapterPregunta {
 
                     String opcionesUpd = """
                         1. id Capitulo
-                        2. numero Pregunta
-                        3. tipo Respuesta
-                        4. comentario Pregunta
-                        5. textoPregunta
-                        6. salir
+                        2. tipo Respuesta
+                        3. comentario Pregunta
+                        4. textoPregunta
+                        5. salir
                         """;
 
                     Optional<Integer> opc = Validaciones.mostrarOpciones(opcionesUpd,1,6);
@@ -198,19 +197,17 @@ public class ConsoleAdapterPregunta {
                                     Start();
                                 }
                                 break;
+                            
                             case 2:
-                                PreguntaUpd.setNumeroPregunta(JOptionPane.showInputDialog(null, "Ingrese el nuevo numero Pregunta"));
-                                break;
-                            case 3:
                                 PreguntaUpd.setTipoRespuesta(JOptionPane.showInputDialog(null, "Ingrese el nuevo tipo Respuesta"));
                                 break;
-                            case 4:
+                            case 3:
                                 PreguntaUpd.setComentarioPregunta(JOptionPane.showInputDialog(null, "Ingrese el nuevo comentario Pregunta"));
                                 break;
-                            case 5:
+                            case 4:
                                 PreguntaUpd.setTextoPregunta(JOptionPane.showInputDialog(null, "Ingrese el nuevo texto"));
                                 break;
-                            case 6:
+                            case 5:
                                 bandera = false;
                                 break;
                             }

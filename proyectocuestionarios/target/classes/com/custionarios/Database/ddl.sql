@@ -51,7 +51,9 @@ CREATE TABLE capitulos (
     CONSTRAINT pk_capitulos PRIMARY KEY (id),
     CONSTRAINT fk_capitulos_encuesta FOREIGN KEY (id_encuesta) REFERENCES encuestas(id)
 );
--- procedure verificar
+
+
+-- procedure LISTO
 CREATE TABLE preguntas (
     id INT AUTO_INCREMENT,
     id_capitulo INT,
@@ -64,6 +66,15 @@ CREATE TABLE preguntas (
     CONSTRAINT pk_preguntas PRIMARY KEY (id),
     CONSTRAINT fk_preguntas_capitulo FOREIGN KEY (id_capitulo) REFERENCES capitulos(id)
 );
+
+
+
+
+
+
+
+
+
 --valor de opcion crear la misma funcion para los capitulos
 CREATE TABLE opciones_respuesta (
     id INT AUTO_INCREMENT,
@@ -81,6 +92,18 @@ CREATE TABLE opciones_respuesta (
     CONSTRAINT fk_opciones_pregunta FOREIGN KEY (id_pregunta) REFERENCES preguntas(id),
     CONSTRAINT fk_opciones_padre FOREIGN KEY (id_opcion_padre) REFERENCES opciones_respuesta(id)
 );
+
+
+
+
+
+
+
+
+
+
+
+
 
 -- tambien crear procedure
 CREATE TABLE subopciones_respuesta (
@@ -105,38 +128,134 @@ CREATE TABLE respuestas (
     CONSTRAINT fk_respuestas_subopcion FOREIGN KEY (id_subrespuesta) REFERENCES subopciones_respuesta(id)
 );
 
--- respuesta tabla alterna (
 
-CREATE TABLE respuestas (
+
+--procedure para guardar los capitulos con su numero correspondiente
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS validarvaloropcion$$
+CREATE PROCEDURE  validarvaloropcion(
+    IN idpregunta INT,
+    IN idcategoriacatalogo INT,
+    IN idopcionpadre INT,
+    IN tipocomponentehtml VARCHAR(100),
+    IN comentariorespuesta TEXT,
+    IN textoopcion TEXT
+)
+BEGIN
+    DECLARE NumMax INT;
+    DECLARE NumSiguiente INT;
+
+    SELECT MAX(valor_opcion) INTO NumMax
+    FROM opciones_respuesta
+    WHERE id_pregunta = idpregunta;
+   
+
+    IF NumMax IS NULL THEN
+        SET NumSiguiente = 1;
+    ELSE
+        SET NumSiguiente = NumMax + 1;
+    END IF;
+
+    
+    INSERT INTO opciones_respuesta (valor_opcion, id_categoria_catalogo, id_pregunta, creado_en, actualizado_en, tipo_componente_html, comentario_respuesta, texto_opcion) 
+    VALUES (NumSiguiente, idcategoriacatalogo,idpregunta, NOW(),NOW(),tipocomponentehtml,comentariorespuesta,textoopcion);
+END$$
+DELIMITER ;
+
+--procedure para actualizar los capitulos con su numero correspondiente
+
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS actualizaropciones$$
+CREATE PROCEDURE  actualizaropciones(
+    IN idor INT,
+    IN idpregunta INT,
+    IN idcategoriacatalogo INT,
+    IN idopcionpadre INT,
+    IN tipocomponentehtml VARCHAR(100),
+    IN comentariorespuesta TEXT,
+    IN textoopcion TEXT
+)
+
+BEGIN
+    DECLARE NumMax INT;
+    DECLARE NumSiguiente INT;
+    DECLARE insPregunta INT;
+    DECLARE valoractual INT;
+
+    SELECT MAX(valor_opcion) INTO NumMax
+    FROM opciones_respuesta
+    WHERE id_pregunta = idpregunta;
+
+    IF NumMax IS NULL THEN
+        SET NumSiguiente = 1;
+    ELSE
+        SET NumSiguiente = NumMax + 1;
+    END IF;
+
+    SELECT id_pregunta INTO insPregunta
+    FROM opciones_respuesta
+    WHERE id = idor;
+
+    SELECT valor_opcion INTO valoractual
+    FROM opciones_respuesta
+    WHERE id = idor AND id_pregunta = idpregunta; 
+
+    IF insPregunta = idpregunta THEN
+        UPDATE opciones_respuesta 
+        SET valor_opcion = valoractual, id_pregunta = idpregunta, id_categoria_catalogo = idcategoriacatalogo, actualizado_en = now(), id_opcion_padre = idopcionpadre, tipo_componente_html = tipocomponentehtml, comentario_respuesta = comentariorespuesta, texto_opcion = textoopcion
+        WHERE id = idor;
+    ELSE 
+        UPDATE opciones_respuesta 
+        SET valor_opcion = NumSiguiente, id_pregunta = idpregunta, id_categoria_catalogo = idcategoriacatalogo, actualizado_en = now(), id_opcion_padre = idopcionpadre, tipo_componente_html = tipocomponentehtml, comentario_respuesta = comentariorespuesta, texto_opcion = textoopcion
+        WHERE id = idor;
+        
+    END IF;
+
+END$$
+DELIMITER ;
+
+
+CREATE TABLE subopciones_respuesta (
     id INT AUTO_INCREMENT,
-    id_pregunta INT,
-    id_respuesta INT,
-    id_subrespuesta INT,
-    texto_respuesta VARCHAR(80),
-    CONSTRAINT pk_respuestas PRIMARY KEY (id),
-    CONSTRAINT fk_respuestas_opcionesrespuesta FOREIGN KEY (id_respuesta) REFERENCES opciones_respuesta(id),
-    CONSTRAINT fk_respuestas_pregunta FOREIGN KEY (id_pregunta) REFERENCES preguntas(id),
-    CONSTRAINT fk_respuestas_subopcion FOREIGN KEY (id_subrespuesta) REFERENCES subopciones_respuesta(id)
+    numero_subopcion INT NOT NULL,
+    creado_en TIMESTAMP,
+    actualizado_en TIMESTAMP,
+    id_opcion_respuesta INT,
+    componente_html VARCHAR(255),
+    texto_subopcion VARCHAR(255),
+    CONSTRAINT pk_subopciones_respuesta PRIMARY KEY (id),
+    CONSTRAINT fk_subopciones_opcion FOREIGN KEY (id_opcion_respuesta) REFERENCES opciones_respuesta(id)
 );
 
---consulta para tener las preguntas
-SELECT p.numero_pregunta, p.texto_pregunta
-FROM preguntas p
-JOIN capitulos c ON p.id_capitulo = c.id
-WHERE id_encuesta = ? AND  c.numero_capitulo = ?;
+DELIMITER $$
+DROP PROCEDURE IF EXISTS validarnumerocapitulo$$
+CREATE PROCEDURE  validarnumerocapitulo(
+    IN idpregunta INT,
+    IN idcategoriacatalogo INT,
+    IN idopcionpadre INT,
+    IN tipocomponentehtml VARCHAR(100),
+    IN comentariorespuesta TEXT,
+    IN textoopcion TEXT
+)
+BEGIN
+    DECLARE NumMax INT;
+    DECLARE NumSiguiente INT;
 
---consulta para obtener opciones 
-SELECT *
-FROM preguntas p
-JOIN capitulos c ON p.id_capitulo = c.id
-WHERE id_encuesta = 1 AND  c.numero_capitulo = 2;
+    SELECT MAX(valor_opcion) INTO NumMax
+    FROM opciones_respuesta
+    WHERE id_pregunta = idpregunta;
+   
 
-SELECT or1.id_pregunta AS numpreguntapadre
-FROM opciones_respuesta or2 
-JOIN opciones_respuesta or1 ON or2.id_opcion_padre = or1.id
-WHERE or2.id = (
-    SELECT p.id
-    FROM preguntas p 
-    JOIN capitulos c ON c.id = p.id_capitulo
-    WHERE p.numero_pregunta = ? AND  c.numero_capitulo = ? AND c.id_encuesta = ?);
+    IF NumMax IS NULL THEN
+        SET NumSiguiente = 1;
+    ELSE
+        SET NumSiguiente = NumMax + 1;
+    END IF;
 
+    
+    INSERT INTO opciones_respuesta (valor_opcion, id_categoria_catalogo, id_pregunta, creado_en, actualizado_en, tipo_componente_html, comentario_respuesta, texto_opcion) 
+    VALUES (NumSiguiente, idcategoriacatalogo,idpregunta, NOW(),NOW(),tipocomponentehtml,comentariorespuesta,textoopcion);
+END$$
+DELIMITER ;

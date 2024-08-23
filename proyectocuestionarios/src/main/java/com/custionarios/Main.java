@@ -13,11 +13,11 @@ public class Main {
         // LOGIN.Start();
     
 
-        ConsoleAdapterGenerarCuestionarios g = new ConsoleAdapterGenerarCuestionarios();
-        g.Start();
+        // ConsoleAdapterGenerarCuestionarios g = new ConsoleAdapterGenerarCuestionarios();
+        // g.Start();
 
         
-        // menuAdministracion menu = new menuAdministracion();
-        // menu.Start();
+        menuAdministracion menu = new menuAdministracion();
+        menu.Start();
     }                    
 }

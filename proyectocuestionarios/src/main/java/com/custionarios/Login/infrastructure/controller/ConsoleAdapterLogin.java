@@ -45,14 +45,16 @@ public class ConsoleAdapterLogin {
                     menuAdministracion menuCrud = new menuAdministracion();
                     menuCrud.Start();
                     
-                } else if (rol != 1 && habilitado == true) {
+                } 
+                if (rol != 1 && habilitado == true) {
                     
                     ConsoleAdapterGenerarCuestionarios encuesta = new ConsoleAdapterGenerarCuestionarios();
                     encuesta.Start();
-                }else if (habilitado == false) {
+                }
+                if (habilitado == false) {
                     JOptionPane.showMessageDialog(null,"Lo siento, no estas Habilitado");
                     
-                }
+                } 
             }
 
         } else {

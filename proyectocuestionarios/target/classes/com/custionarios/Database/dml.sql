@@ -196,7 +196,11 @@ BEGIN
     FROM capitulos
     WHERE id_encuesta = idEncuesta;
 
-    SET NumSiguiente = NumMax + 1;
+    IF NumMax IS NULL THEN
+        SET NumSiguiente = 1;
+    ELSE
+        SET NumSiguiente = NumMax + 1;
+    END IF;
 
     SELECT id_encuesta INTO encuestanum 
     FROM capitulos
@@ -208,11 +212,11 @@ BEGIN
 
     IF encuestanum = idEncuesta THEN
         UPDATE capitulos 
-        SET id_encuesta = idEncuesta, numero_capitulo = numcapituloactual ,titulo_capitulo = titulocapitulo
+        SET id_encuesta = idEncuesta, numero_capitulo = numcapituloactual ,titulo_capitulo = titulocapitulo, actualizado_en = NOW()
         WHERE id = idcapitulo;
     ELSE 
         UPDATE capitulos 
-        SET id_encuesta = idEncuesta, numero_capitulo = NumSiguiente ,titulo_capitulo = titulocapitulo
+        SET id_encuesta = idEncuesta, numero_capitulo = NumSiguiente ,titulo_capitulo = titulocapitulo, actualizado_en = NOW()
         WHERE id = idcapitulo;
         
     END IF;
@@ -275,7 +279,11 @@ BEGIN
     FROM preguntas
     WHERE id_capitulo   = idcapitulo;
 
-    SET NumSiguiente = NumMax + 1;
+    IF NumMax IS NULL THEN
+        SET NumSiguiente = 1;
+    ELSE
+        SET NumSiguiente = NumMax + 1;
+    END IF;
 
     SELECT id_capitulo INTO capitulonum 
     FROM preguntas
@@ -300,10 +308,4 @@ BEGIN
 END$$
 DELIMITER ;
 
-CALL CREATE PROCEDURE  actualizarpregunta(
-    IN preguntaActualizar INT,
-    IN idcapitulo INT,
-    IN tipoRespuesta VARCHAR(100),
-    IN comentarioPregunta VARCHAR(300),
-    IN textoPregunta VARCHAR(200)
-)
+CALL CREATE PROCEDURE  actualizarpregunta()
