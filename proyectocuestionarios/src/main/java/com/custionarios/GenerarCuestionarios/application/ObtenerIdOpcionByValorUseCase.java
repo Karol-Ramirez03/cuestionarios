@@ -1,9 +1,7 @@
 package com.custionarios.GenerarCuestionarios.application;
 
-import java.util.List;
 import java.util.Optional;
 
-import com.custionarios.GenerarCuestionarios.domain.entity.GenerarCuestionarios;
 import com.custionarios.GenerarCuestionarios.domain.service.GenerarCuestionariosService;
 
 public class ObtenerIdOpcionByValorUseCase {

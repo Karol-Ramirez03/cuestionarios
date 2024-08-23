@@ -85,7 +85,7 @@ INSERT INTO preguntas (id_capitulo, creado_en, actualizado_en, numero_pregunta, 
 
 
 INSERT INTO opciones_respuesta (valor_opcion, id_categoria_catalogo, id_pregunta, creado_en, actualizado_en, tipo_componente_html, comentario_respuesta, texto_opcion) VALUES
-(1, 9, 1, '2024-09-01', '2024-09-15', 'radio', 'Escala de actividad física', NULL),
+
 
 
 (1, 2, 2, '2024-09-01', '2024-09-15', 'radio', 'Escala de actividad física', 'Muy bajo'),
@@ -139,7 +139,8 @@ INSERT INTO opciones_respuesta (valor_opcion, id_categoria_catalogo, id_pregunta
 (4, 6, 9, '2024-12-20', '2024-12-30', 'radio', 'Escala de nivel de estrés', 'Muy alto');
 
 INSERT INTO opciones_respuesta (valor_opcion, id_categoria_catalogo, id_pregunta, creado_en, actualizado_en, tipo_componente_html, id_opcion_padre , comentario_respuesta, texto_opcion) VALUES
-(3, 7, 4, '2024-09-01', '2024-09-15', 'radio', 3, 'Escala de salud', 'nose');
+(1, 9, 1, '2024-09-01', '2024-09-15', 'radio', NULL, 'Escala de actividad física', NULL),
+(3, 7, 4, '2024-09-01', '2024-09-15', 'radio', 32, 'Escala de salud', 'nose');
 
 INSERT INTO subopciones_respuesta (numero_subopcion, creado_en, actualizado_en, id_opcion_respuesta, componente_html, texto_subopcion) VALUES
 (1, '2024-09-02 10:00:00', '2024-09-02 10:00:00', 2, 'checkbox', 'practico poco porque no tengo los recursos'),

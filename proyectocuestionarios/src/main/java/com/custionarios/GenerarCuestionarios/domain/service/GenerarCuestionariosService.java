@@ -25,5 +25,9 @@ public interface GenerarCuestionariosService {
     public int retornaridSubOpcion(int idEncuesta, int numCap,int numPreg,int valorOpc,int numSubOpcion);
     public int retornaridSubOpcionPorvalor(int idOpcion, int valorSub);
     public Optional<String> preguntaabierta(int id);
-    public void  guardar_respuesta();
+    public void  guardar_respuestaOpcion(int idopcion);
+    public void  guardar_respuestaSubOpcion(int subopcion);
+    public void  guardar_respuestaOpcionAbierta(int idopcionabierta,String respuestaAbierta);
+
+
 }

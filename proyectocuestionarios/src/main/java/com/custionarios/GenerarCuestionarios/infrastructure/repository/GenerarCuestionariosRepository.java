@@ -219,12 +219,6 @@ public class GenerarCuestionariosRepository implements GenerarCuestionariosServi
 
 
     @Override
-    public void guardar_respuesta() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'guardar_respuesta'");
-    }
-
-    @Override
     public Optional<List<GenerarCuestionarios>> opbteneridopcion(int id_encuesta, int numero_capitulo, int numero_pregunta, int valor_opcion) {
         String sql = """
                 SELECT or2.id AS idpreguntasfind
@@ -458,6 +452,47 @@ public class GenerarCuestionariosRepository implements GenerarCuestionariosServi
             e.printStackTrace();
         }
         return Optional.empty();
+    }
+
+    @Override
+    public void guardar_respuestaOpcion(int idopcion) {
+        String sql = "INSERT INTO respuestas(id_respuesta) VALUES (?)";
+        try (Connection connection = database.getConnection();
+        PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, idopcion);
+            ps.executeUpdate();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "¡Error!, vuelve a intenntarlo p");
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void guardar_respuestaSubOpcion(int subopcion) {
+        String sql = "INSERT INTO respuestas(id_subrespuesta) VALUES (?)";
+        try (Connection connection = database.getConnection();
+        PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, subopcion);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "¡Error!, vuelve a intenntarlo p");
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void guardar_respuestaOpcionAbierta(int idopcionabierta, String respuestaAbierta) {
+        String sql = "INSERT INTO respuestas(id_respuesta,texto_respuesta) VALUES (?,?)";
+        try (Connection connection = database.getConnection();
+        PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, idopcionabierta);
+            ps.executeUpdate();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "¡Error!, vuelve a intenntarlo p");
+            e.printStackTrace();
+        }
     }
     
     

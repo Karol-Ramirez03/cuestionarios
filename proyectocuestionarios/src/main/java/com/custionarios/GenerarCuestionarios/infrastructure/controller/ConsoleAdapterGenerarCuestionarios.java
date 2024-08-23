@@ -5,6 +5,9 @@ import java.util.Optional;
 
 import javax.swing.JOptionPane;
 
+import com.custionarios.GenerarCuestionarios.application.GuardarRespuestaOpcionAbiertaUseCase;
+import com.custionarios.GenerarCuestionarios.application.GuardarRespuestaOpcionUseCase;
+import com.custionarios.GenerarCuestionarios.application.GuardarRespuestaSubOpcionUseCase;
 import com.custionarios.GenerarCuestionarios.application.MostrarCapitulosUseCase;
 import com.custionarios.GenerarCuestionarios.application.MostrarCuestionariosUseCase;
 import com.custionarios.GenerarCuestionarios.application.MostrarOpcionesUseCase;
@@ -55,6 +58,9 @@ public class ConsoleAdapterGenerarCuestionarios {
     private RetornaIdSubOpcionesUseCase retornarSubOpcion;
     private RetornarIdSubOpcionPorValorUseCase retornarSubValor;
     private preguntaAbiertaUseCase preguntaAbierta;
+    private GuardarRespuestaOpcionUseCase guardarOpcion;
+    private GuardarRespuestaOpcionAbiertaUseCase guardarOpcionAbierta;
+    private GuardarRespuestaSubOpcionUseCase guardarSubOpcion;
 
     
 
@@ -77,6 +83,9 @@ public class ConsoleAdapterGenerarCuestionarios {
         this.retornarSubOpcion = new RetornaIdSubOpcionesUseCase(generarCuestionariosService);
         this.retornarSubValor = new RetornarIdSubOpcionPorValorUseCase(generarCuestionariosService);
         this.preguntaAbierta = new preguntaAbiertaUseCase(generarCuestionariosService);
+        this.guardarOpcion = new GuardarRespuestaOpcionUseCase(generarCuestionariosService);
+        this.guardarOpcionAbierta = new GuardarRespuestaOpcionAbiertaUseCase(generarCuestionariosService);
+        this.guardarSubOpcion = new GuardarRespuestaSubOpcionUseCase(generarCuestionariosService);
     }
 
     public int validarnumeros(int numeromax, String opcionelegida) {
@@ -191,7 +200,11 @@ public class ConsoleAdapterGenerarCuestionarios {
         if (opciones.isPresent()) {
             List<GenerarCuestionarios> opcion = opciones.get();
             for (GenerarCuestionarios opc : opcion) {
-                st.append(opc.getIndice()).append(" - ").append(opc.getNombre()).append("\n"); 
+                String nombre = opc.getNombre();
+                if (nombre == null) {
+                    nombre = "pregunta opcion abierta";
+                }
+                st.append(opc.getIndice()).append(" - ").append(nombre).append("\n"); 
             }
             st.append(opcion.size()+1).append(" - ").append("salir");
             String data = JOptionPane.showInputDialog(null,st);
@@ -261,6 +274,7 @@ public class ConsoleAdapterGenerarCuestionarios {
                                 if (subopcion.isPresent()) {
                                     int idSub = subopcion.get();
                                     int idSubopcion = retornarSubValor.execute(idopcion, idSub);
+                                    guardarSubOpcion.execute(idSubopcion);
                                     //logica para guardar subopcion "esto retorna el numero"
                                     /*
                                      * 
@@ -277,6 +291,7 @@ public class ConsoleAdapterGenerarCuestionarios {
                                     } else {
                                         // guardar opcion de tipo id 
                                         String respuestaABIERTA = JOptionPane.showInputDialog(null,"escriba su respuesta");
+                                        guardarOpcionAbierta.execute(idopcion, respuestaABIERTA);
 
                                     }
                                     //LE PASO ID "OPCION " SI OPCION ES NULL O VACIA RETORNA TRUE Y HABRE UN INPUT
