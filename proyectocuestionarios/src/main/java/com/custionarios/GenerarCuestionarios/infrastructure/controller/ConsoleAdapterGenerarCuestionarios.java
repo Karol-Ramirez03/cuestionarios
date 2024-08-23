@@ -285,16 +285,14 @@ public class ConsoleAdapterGenerarCuestionarios {
                                 } else {
                                     //idopcion logica guardar
                                     Optional<String> Stringvalidar = preguntaAbierta.execute(idopcion);
-                                    if (Stringvalidar.isPresent()) {
-                                        
-
-                                    } else {
+                                    if (!Stringvalidar.isPresent()) {
                                         // guardar opcion de tipo id 
                                         String respuestaABIERTA = JOptionPane.showInputDialog(null,"escriba su respuesta");
                                         guardarOpcionAbierta.execute(idopcion, respuestaABIERTA);
 
                                     }
                                     //LE PASO ID "OPCION " SI OPCION ES NULL O VACIA RETORNA TRUE Y HABRE UN INPUT
+                                    guardarOpcion.execute(idopcion);
 
                                 }
                             
@@ -341,15 +339,18 @@ public class ConsoleAdapterGenerarCuestionarios {
             }
             Optional<Integer> numeroopc = imprimiropciones(numerocap, numeroPreg, idencuesta);
             if (numeroopc.isPresent()) {
-                int valoropcion = numeroopc.get();
+                int valoropcion = numeroopc.get(); //me da el numero de opcion
                 //si valor opcion es 
-                Optional<Integer> valorOpcion = mostrarSubOpciones(idencuesta, numerocap, numeroPreg, valoropcion);//CREO QUE RETORNA EL VALOR DE LA OPCION
+                Optional<Integer> valorSubOpcion = mostrarSubOpciones(idencuesta, numerocap, numeroPreg, valoropcion);//me RETORNA EL VALOR DE LA SubOPCION
                 
-                if (valorOpcion.isPresent()) {
-                    int Opcion = valorOpcion.get();
-                    int idSub = retornarSubOpcion.execute(idencuesta, numerocap, numeroPreg, valoropcion, Opcion);//EL ID DE LA SUBOPCION
+                if (valorSubOpcion.isPresent()) {
+                    int SubOpcion = valorSubOpcion.get();   
+                    int idSub = retornarSubOpcion.execute(idencuesta, numerocap, numeroPreg, valoropcion, SubOpcion);//EL ID DE LA SUBOPCION
+                    guardarSubOpcion.execute(idSub);
 
                     //guardar subopcion
+
+
                 } else {
                     Optional<List<GenerarCuestionarios>> idOpc = GetIdOpcion.execute(idencuesta, numerocap, numeroPreg, valoropcion); //retorna el id de la opcion
                     if (idOpc.isPresent()) {
@@ -358,17 +359,13 @@ public class ConsoleAdapterGenerarCuestionarios {
                             int opcion = opc.getId();
 
                             Optional<String> Stringvalidar = preguntaAbierta.execute(opcion);
-                            if (Stringvalidar.isPresent()) {
-                                
-                                //String respuestaABIERTA = JOptionPane.showInputDialog(null,"escriba su respuesta");
-                                
-                                
-                            } else {
+                            if (!Stringvalidar.isPresent()) {
                                 // guardar opcion de tipo id 
                                 String respuestaABIERTA = JOptionPane.showInputDialog(null,"escriba su respuesta");
+                                guardarOpcionAbierta.execute(opcion, respuestaABIERTA);
 
                             }
-
+                            guardarOpcion.execute(opcion);
                             //logicca de guardar 
                             //LE PASO ID "OPCION " SI OPCION ES NULL O VACIA RETORNA TRUE Y HABRE UN INPUT
                         }

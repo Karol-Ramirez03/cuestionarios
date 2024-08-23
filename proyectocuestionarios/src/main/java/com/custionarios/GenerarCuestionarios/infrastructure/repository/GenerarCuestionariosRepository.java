@@ -487,6 +487,7 @@ public class GenerarCuestionariosRepository implements GenerarCuestionariosServi
         try (Connection connection = database.getConnection();
         PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, idopcionabierta);
+            ps.setString(2, respuestaAbierta);
             ps.executeUpdate();
             
         } catch (Exception e) {
@@ -494,6 +495,4 @@ public class GenerarCuestionariosRepository implements GenerarCuestionariosServi
             e.printStackTrace();
         }
     }
-    
-    
-}
+} 
