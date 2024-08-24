@@ -429,13 +429,3 @@ DELIMITER ;
 
 
 
-CALL validarvaloropcion(2,2,null,"ddd","www","nuevo");
-
-
-
-CALL actualizaropciones(34,4,4,null,"pepe","loca","linda");
-
-
-CALL actualizarSubopciones(1,2,"hello","goodbye");
-
-CALL validarvalorsubopciones(3,"hello","goodbye");
