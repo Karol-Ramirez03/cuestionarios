@@ -58,20 +58,28 @@ public class ConsoleAdapterRespuesta {
     public void ejecutarOpcion(int opcion) {
         switch (opcion) {
             case 1:
-            
             try {
-                String idRespuestastr = JOptionPane.showInputDialog(null, "Escriba el id de la opcion escogida : ");
-                int idRespuesta = Integer.parseInt(idRespuestastr);
+                Integer idRespuesta = null;
+                Integer idSubrespuesta = null;
+            
+                String idRespuestastr = JOptionPane.showInputDialog(null, "Escriba el id de la opcion escogida: ");
+                if (idRespuestastr != null && !idRespuestastr.trim().isEmpty()) {
+                    idRespuesta = Integer.parseInt(idRespuestastr);
+                }
+            
                 String idSubrespuestastr = JOptionPane.showInputDialog(null, "Escriba el id de la sub opcion escogida: ");
-                int idSubrespuesta = Integer.parseInt(idSubrespuestastr);
+                if (idSubrespuestastr != null && !idSubrespuestastr.trim().isEmpty()) {
+                    idSubrespuesta = Integer.parseInt(idSubrespuestastr);
+                }
+            
                 String textoRespuesta = JOptionPane.showInputDialog(null, "Escriba tu respuesta: ");
-                
                 Respuesta respuesta = new Respuesta(idRespuesta, idSubrespuesta, textoRespuesta);
                 createresp.execute(respuesta);
-                Start();
                 
+                Start();
+            
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null,  "problemas en el ingreso de datos,Vuelve a intentarlo");
+                JOptionPane.showMessageDialog(null, "Problemas en el ingreso de datos, vuelve a intentarlo");
                 Start();
             }
 
@@ -100,8 +108,8 @@ public class ConsoleAdapterRespuesta {
                     String textoRespuesta =  Respuesta.getTextoRespuesta();
 
                     mensaje.append("ID: ").append(id).append("\n")
-                    .append("idRespuesta: ").append(idRespuesta).append(", ")
-                    .append("idSubrespuesta: ").append(idSubrespuesta).append(", ")
+                    .append("idRespuesta: ").append(idRespuesta).append("\n")
+                    .append("idSubrespuesta: ").append(idSubrespuesta).append("\n")
                     .append("textoRespuesta: ").append(textoRespuesta).append("\n\n");
      
                 }
@@ -130,8 +138,8 @@ public class ConsoleAdapterRespuesta {
                         String textoRespuesta =  datopre.getTextoRespuesta();
 
                         mensajeid.append("ID: ").append(id).append("\n")
-                        .append("idRespuesta: ").append(idRespuesta).append(", ")
-                        .append("idSubrespuesta: ").append(idSubrespuesta).append(", ")
+                        .append("idRespuesta: ").append(idRespuesta).append("\n")
+                        .append("idSubrespuesta: ").append(idSubrespuesta).append("\n")
                         .append("textoRespuesta: ").append(textoRespuesta).append("\n\n");
                     } 
                     JOptionPane.showMessageDialog(null, mensajeid);
@@ -168,21 +176,34 @@ public class ConsoleAdapterRespuesta {
                         switch (numero) {
                             case 1:
                                 try {
-                                    int respuesta = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el nuevo id Respuesta"));
+                                    String respuestaStr = JOptionPane.showInputDialog(null, "Ingrese el nuevo id Respuesta: ");
+                                    Integer respuesta = null;
+                                
+                                    if (respuestaStr != null && !respuestaStr.trim().isEmpty()) {
+                                        respuesta = Integer.parseInt(respuestaStr);
+                                    }
                                     RespuestaUpd.setIdRespuesta(respuesta);
+                                
                                 } catch (Exception e) {
-                                    JOptionPane.showMessageDialog(null,  "problemas en el ingreso de datos,Vuelve a intentarlo");
+                                    JOptionPane.showMessageDialog(null, "Problemas en el ingreso de datos. Vuelve a intentarlo.");
                                     Start();
                                 }
                                 break;
                             case 2:
                                 try {
-                                    int respuesta = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el nuevo id Sub respuesta"));
-                                    RespuestaUpd.setIdSubrespuesta(respuesta);
+                                    String respuestaStr = JOptionPane.showInputDialog(null, "Ingrese el nuevo id Sub respuesta: ");
+                                    Integer idSubrespuesta = null;
+                                
+                                    if (respuestaStr != null && !respuestaStr.trim().isEmpty()) {
+                                        idSubrespuesta = Integer.parseInt(respuestaStr);
+                                    }
+                                
+                                    RespuestaUpd.setIdSubrespuesta(idSubrespuesta);
                                 } catch (Exception e) {
-                                    JOptionPane.showMessageDialog(null,  "problemas en el ingreso de datos,Vuelve a intentarlo");
+                                    JOptionPane.showMessageDialog(null, "Problemas en el ingreso de datos. Vuelve a intentarlo.");
                                     Start();
                                 }
+                            
                                 break;
                             case 3:
                                 RespuestaUpd.setTextoRespuesta(JOptionPane.showInputDialog(null, "Ingrese el nuevo texto"));

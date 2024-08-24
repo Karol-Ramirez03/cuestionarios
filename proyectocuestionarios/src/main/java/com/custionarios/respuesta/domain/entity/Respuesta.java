@@ -1,12 +1,12 @@
 package com.custionarios.respuesta.domain.entity;
 
 public class Respuesta {
-    private int id;
-    private int idRespuesta;
-    private int idSubrespuesta;
+    private Integer id;
+    private Integer idRespuesta;
+    private Integer idSubrespuesta;
     private String textoRespuesta;
     
-    public Respuesta(int id, int idRespuesta, int idSubrespuesta, String textoRespuesta) {
+    public Respuesta(Integer id, Integer idRespuesta, Integer idSubrespuesta, String textoRespuesta) {
         this.id = id;
         this.idRespuesta = idRespuesta;
         this.idSubrespuesta = idSubrespuesta;
@@ -14,29 +14,29 @@ public class Respuesta {
     }
     
 
-    public Respuesta(int idRespuesta, int idSubrespuesta, String textoRespuesta) {
+    public Respuesta(Integer idRespuesta, Integer idSubrespuesta, String textoRespuesta) {
         this.idRespuesta = idRespuesta;
         this.idSubrespuesta = idSubrespuesta;
         this.textoRespuesta = textoRespuesta;
     }
 
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
-    public int getIdRespuesta() {
+    public Integer getIdRespuesta() {
         return idRespuesta;
     }
-    public void setIdRespuesta(int idRespuesta) {
+    public void setIdRespuesta(Integer idRespuesta) {
         this.idRespuesta = idRespuesta;
     }
-    public int getIdSubrespuesta() {
+    public Integer getIdSubrespuesta() {
         return idSubrespuesta;
     }
-    public void setIdSubrespuesta(int idSubrespuesta) {
+    public void setIdSubrespuesta(Integer idSubrespuesta) {
         this.idSubrespuesta = idSubrespuesta;
     }
     public String getTextoRespuesta() {

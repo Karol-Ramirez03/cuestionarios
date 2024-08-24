@@ -21,8 +21,20 @@ public class RespuestaRepository implements RespuestaService{
         String sql = "INSERT INTO respuestas (id_respuesta, id_subrespuesta, texto_respuesta) VALUES (?, ?, ?)";
         try (Connection con = database.getConnection();
         PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, respuesta.getIdRespuesta());
-            ps.setInt(2, respuesta.getIdSubrespuesta());
+            System.out.println(respuesta.getIdRespuesta());
+            if (respuesta.getIdRespuesta() == null) {
+                ps.setNull(1, java.sql.Types.INTEGER);
+                
+            } else {
+                ps.setInt(1, respuesta.getIdRespuesta());
+            }
+
+            if (respuesta.getIdSubrespuesta() == null) {
+                ps.setNull(2, java.sql.Types.INTEGER);
+            } else {
+                ps.setInt(2, respuesta.getIdSubrespuesta());
+            }
+
             ps.setString(3, respuesta.getTextoRespuesta());
 
             ps.executeUpdate();
@@ -103,7 +115,18 @@ public class RespuestaRepository implements RespuestaService{
         try (Connection con = database.getConnection();
         PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, respuesta.getIdRespuesta());
-            ps.setInt(2, respuesta.getIdSubrespuesta());
+            System.out.println(respuesta.getIdRespuesta());
+            if (respuesta.getIdRespuesta() == 0 ) {
+                ps.setInt(1, java.sql.Types.INTEGER);
+            } else {
+                ps.setInt(1, respuesta.getIdRespuesta());
+            }
+            System.out.println(respuesta.getIdSubrespuesta());
+            if (respuesta.getIdSubrespuesta() == 0) {
+                ps.setNull(2, java.sql.Types.INTEGER);
+            } else {
+                ps.setInt(2, respuesta.getIdSubrespuesta());
+            }
             ps.setString(3, respuesta.getTextoRespuesta());
             ps.setInt(4, respuesta.getId());
 
