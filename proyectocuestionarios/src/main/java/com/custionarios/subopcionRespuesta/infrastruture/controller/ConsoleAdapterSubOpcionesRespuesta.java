@@ -59,14 +59,12 @@ public class ConsoleAdapterSubOpcionesRespuesta {
         switch (opcion) {
             case 1:
                 try {
-                    String numeroSubopcionstr = JOptionPane.showInputDialog(null, "Escriba el numero de Sub opcion: ");
-                    int numeroSubopcion = Integer.parseInt(numeroSubopcionstr);
                     String idOpcionRespuestastr = JOptionPane.showInputDialog(null, "Escriba el id de la Opcion de Respuesta al que tiene relacion la sub opcion: ");
                     int idOpcionRespuesta = Integer.parseInt(idOpcionRespuestastr);
                     String componenteHtml = JOptionPane.showInputDialog(null, "Escriba el componente Html: ");
                     String textoSubopcion = JOptionPane.showInputDialog(null, "Escriba el texto de la Sub opcion: ");
 
-                    SubOpcionesRespuesta sor = new SubOpcionesRespuesta(numeroSubopcion, idOpcionRespuesta, componenteHtml, textoSubopcion);
+                    SubOpcionesRespuesta sor = new SubOpcionesRespuesta(idOpcionRespuesta, componenteHtml, textoSubopcion);
                     createSOR.execute(sor);
                     Start();
                         
@@ -170,11 +168,10 @@ public class ConsoleAdapterSubOpcionesRespuesta {
                 SubOpcionesRespuesta datoupd = dato.get();
                 while (bandera) {
                     String opcionesUpd = """
-                        1. numero Sub opcion
-                        2. id Opcion de Respuesta
-                        3. componenteHtml
-                        4. texto Sub opcion
-                        5. salir
+                        1. id Opcion de Respuesta
+                        2. componenteHtml
+                        3. texto Sub opcion
+                        4. salir
                         """;
 
                     Optional<Integer> opc = Validaciones.mostrarOpciones(opcionesUpd,1,5);
@@ -183,17 +180,8 @@ public class ConsoleAdapterSubOpcionesRespuesta {
                         int numero = opc.get();
                         
                         switch (numero) {
+                            
                             case 1:
-                                try {
-                                    int num = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el nuevo numero de Sub opcion"));
-                                    datoupd.setNumeroSubopcion(num);
-                                } catch (Exception e) {
-                                    JOptionPane.showMessageDialog(null,  "problemas en el ingreso de datos,Vuelve a intentarlo");
-                                    Start();
-                                }
-                               
-                                break;
-                            case 2:
                                 try {
                                     int num = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el nuevo id de la Opcion de Respuesta al que tiene relacion la sub opcion"));
                                     datoupd.setIdOpcionRespuesta(num);
@@ -202,14 +190,14 @@ public class ConsoleAdapterSubOpcionesRespuesta {
                                     Start();
                                 }
                                 break;
-                            case 3:
+                            case 2:
                                 datoupd.setComponenteHtml(JOptionPane.showInputDialog(null, "Ingrese el nuevo id de la Opcion de Respuesta al que tiene relacion la sub opcion"));
                                 
                                 break;
-                            case 4:
+                            case 3:
                                 datoupd.setTextoSubopcion(JOptionPane.showInputDialog(null, "Ingrese el nuevo id de la Opcion de Respuesta al que tiene relacion la sub opcion"));    
                                 break;
-                            case 5:
+                            case 4:
                                 bandera = false;
                                 break;
                             }

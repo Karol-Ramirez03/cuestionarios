@@ -62,6 +62,7 @@ public class ConsoleAdapterLogin {
             if (response == JOptionPane.OK_OPTION) {
                 Login login = new Login(password, user);
                 ingresar.execute(login);
+                Start();
             } else if (response == JOptionPane.CANCEL_OPTION) {
                 JOptionPane.showMessageDialog(null, "saliendo del programa...");
             }

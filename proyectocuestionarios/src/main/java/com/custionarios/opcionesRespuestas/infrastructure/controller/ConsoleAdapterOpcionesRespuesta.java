@@ -62,16 +62,20 @@ public class ConsoleAdapterOpcionesRespuesta {
             
             try {
 
-                int valorOpcion = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el valor de la Opcion : "));
                 int idCategoriaCatalogo = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el id de Categoria Catalogo: "));
                 int idPregunta = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el id de la Pregunta relacionada: "));
-                int idOpcionPadre = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el id Opcion Padre (opcional /enter para continuar): "));
+                Integer idOpcionPadre = null;
+                String idOpcionPadreStr = JOptionPane.showInputDialog(null, "Escriba el id Opcion Padre (opcional /enter para continuar): ");
+                if (idOpcionPadreStr != null && !idOpcionPadreStr.trim().isEmpty()) {
+                    idOpcionPadre = Integer.parseInt(idOpcionPadreStr);
+                    
+                }
                 String tipoComponenteHtml = JOptionPane.showInputDialog(null, "Escriba el tipo de Componente Html: ");
                 String comentarioRespuesta = JOptionPane.showInputDialog(null, "Escriba el texto de la Opcion: ");
                 String textoOpcion = JOptionPane.showInputDialog(null, "Escriba tu respuesta: ");
 
                 
-                OpcionesRespuesta respuesta = new OpcionesRespuesta(valorOpcion,idCategoriaCatalogo,idPregunta,idOpcionPadre,tipoComponenteHtml,comentarioRespuesta,textoOpcion);
+                OpcionesRespuesta respuesta = new OpcionesRespuesta(idCategoriaCatalogo,idPregunta,idOpcionPadre,tipoComponenteHtml,comentarioRespuesta,textoOpcion);
                 creatOR.execute(respuesta);
                 Start();
                 
@@ -184,14 +188,13 @@ public class ConsoleAdapterOpcionesRespuesta {
                 OpcionesRespuesta RespuestaUpd = dato.get();
                 while (bandera) {
                     String opcionesUpd = """
-                        1. valor Opcion
-                        2. id Categoria Catalogo
-                        3. id Pregunta
-                        4. id Opcion Padre
-                        5. tipo de Componente Html
-                        6. comentario Respuesta
-                        7. texto 
-                        8. salir 
+                        1. id Categoria Catalogo
+                        2. id Pregunta
+                        3. id Opcion Padre
+                        4. tipo de Componente Html
+                        5. comentario Respuesta
+                        6. texto 
+                        7. salir 
                         """;
 
                     Optional<Integer> opc = Validaciones.mostrarOpciones(opcionesUpd,1,8);
@@ -202,15 +205,6 @@ public class ConsoleAdapterOpcionesRespuesta {
                         switch (numero) {
                             case 1:
                                 try {
-                                    int respuesta = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el valor de Opcion"));
-                                    RespuestaUpd.setValorOpcion(respuesta);
-                                } catch (Exception e) {
-                                    JOptionPane.showMessageDialog(null,  "problemas en el ingreso de datos,Vuelve a intentarlo");
-                                    Start();
-                                }
-                                break;
-                            case 2:
-                                try {
                                     int respuesta = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el nuevo id Categoria Catalogo"));
                                     RespuestaUpd.setIdCategoriaCatalogo(respuesta);
                                 } catch (Exception e) {
@@ -218,7 +212,7 @@ public class ConsoleAdapterOpcionesRespuesta {
                                     Start();
                                 }
                                 break;
-                            case 3:
+                            case 2:
                                 try {
                                     int respuesta = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el nuevo id Pregunta"));
                                     RespuestaUpd.setIdPregunta(respuesta);
@@ -227,25 +221,29 @@ public class ConsoleAdapterOpcionesRespuesta {
                                     Start();
                                 }
                                 break;
-                            case 4:
+                            case 3:
                                 try {
-                                    int respuesta = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el nuevo id Opcion Padre"));
-                                    RespuestaUpd.setIdOpcionPadre(respuesta);
+                                    Integer idOpcionPadre = null;
+                                    String idOpcionPadreStr = JOptionPane.showInputDialog(null, "Escriba el id Opcion Padre (opcional /enter para continuar): ");
+                                    if (idOpcionPadreStr != null && !idOpcionPadreStr.trim().isEmpty()) {
+                                        idOpcionPadre = Integer.parseInt(idOpcionPadreStr);
+                                    }
+                                    RespuestaUpd.setIdOpcionPadre(idOpcionPadre);
                                 } catch (Exception e) {
                                     JOptionPane.showMessageDialog(null,  "problemas en el ingreso de datos,Vuelve a intentarlo");
                                     Start();
                                 }
                                 break;
-                            case 5:
+                            case 4:
                                 RespuestaUpd.setTipoComponenteHtml(JOptionPane.showInputDialog(null, "Ingrese el nuevo tipo de Componente Html"));
                                 break;
-                            case 6:
+                            case 5:
                                 RespuestaUpd.setComentarioRespuesta(JOptionPane.showInputDialog(null, "Ingrese el nuevo comentario Respuesta"));
                                 break;
-                            case 7:
+                            case 6:
                                 RespuestaUpd.setTextoOpcion(JOptionPane.showInputDialog(null, "Ingrese el nuevo texto"));
                                 break;
-                            case 8:
+                            case 7:
                                 bandera = false;
                                 break;
                             }

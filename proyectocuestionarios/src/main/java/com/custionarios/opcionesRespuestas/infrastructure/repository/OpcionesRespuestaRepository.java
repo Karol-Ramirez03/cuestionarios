@@ -19,16 +19,15 @@ public class OpcionesRespuestaRepository implements OpcionesRespuestaService{
 
     @Override
     public void CreateOpcionesRespuesta(OpcionesRespuesta opcionesRespuesta) {
-        String sql = "INSERT INTO opciones_respuesta (valor_opcion, id_categoria_catalogo, id_pregunta, creado_en, actualizado_en, id_opcion_padre , tipo_componente_html, comentario_respuesta, texto_opcion) VALUES (?, ?, ?, NOW(), NOW(),?,?,?,?)";
+        String sql = "CALL validarvaloropcion(?,?,?,?,?,?)";
         try (Connection con = database.getConnection();
         PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, opcionesRespuesta.getValorOpcion());
+            ps.setInt(1, opcionesRespuesta.getIdPregunta());
             ps.setInt(2, opcionesRespuesta.getIdCategoriaCatalogo());
-            ps.setInt(3, opcionesRespuesta.getIdPregunta());
-            ps.setInt(4, opcionesRespuesta.getIdOpcionPadre());
-            ps.setString(5, opcionesRespuesta.getTipoComponenteHtml());
-            ps.setString(6, opcionesRespuesta.getComentarioRespuesta());
-            ps.setString(7, opcionesRespuesta.getTextoOpcion());
+            ps.setInt(3, opcionesRespuesta.getIdOpcionPadre());
+            ps.setString(4, opcionesRespuesta.getTipoComponenteHtml());
+            ps.setString(5, opcionesRespuesta.getComentarioRespuesta());
+            ps.setString(6, opcionesRespuesta.getTextoOpcion());
 
 
             ps.executeUpdate();
@@ -123,17 +122,16 @@ public class OpcionesRespuestaRepository implements OpcionesRespuestaService{
 
     @Override
     public void updateOpcionesRespuesta(OpcionesRespuesta opcionesRespuesta) {
-        String sql = "UPDATE opciones_respuesta SET valor_opcion = ?, id_categoria_catalogo = ?, id_pregunta = ?, actualizado_en = NOW(), id_opcion_padre = ? , tipo_componente_html = ?, comentario_respuesta = ?, texto_opcion = ?  WHERE id = ?";
+        String sql = "CALL actualizaropciones(?,?,?,?,?,?,?)";
         try (Connection con = database.getConnection();
         PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, opcionesRespuesta.getValorOpcion());
-            ps.setInt(2, opcionesRespuesta.getIdCategoriaCatalogo());
-            ps.setInt(3, opcionesRespuesta.getIdPregunta());
+            ps.setInt(1, opcionesRespuesta.getId());
+            ps.setInt(2, opcionesRespuesta.getIdPregunta());
+            ps.setInt(3, opcionesRespuesta.getIdCategoriaCatalogo());
             ps.setInt(4, opcionesRespuesta.getIdOpcionPadre());
             ps.setString(5, opcionesRespuesta.getTipoComponenteHtml());
             ps.setString(6, opcionesRespuesta.getComentarioRespuesta());
             ps.setString(7, opcionesRespuesta.getTextoOpcion());
-            ps.setInt(8, opcionesRespuesta.getId());
 
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null,  "opcionesRespuesta actualizado con exito");

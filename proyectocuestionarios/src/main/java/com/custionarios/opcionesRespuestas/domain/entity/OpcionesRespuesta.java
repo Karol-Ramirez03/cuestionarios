@@ -17,6 +17,18 @@ public class OpcionesRespuesta {
 
     
 
+    public OpcionesRespuesta(int idCategoriaCatalogo, int idPregunta, int idOpcionPadre, String tipoComponenteHtml,
+            String comentarioRespuesta, String textoOpcion) {
+        this.idCategoriaCatalogo = idCategoriaCatalogo;
+        this.idPregunta = idPregunta;
+        this.idOpcionPadre = idOpcionPadre;
+        this.tipoComponenteHtml = tipoComponenteHtml;
+        this.comentarioRespuesta = comentarioRespuesta;
+        this.textoOpcion = textoOpcion;
+    }
+
+
+
     public OpcionesRespuesta(int valorOpcion, int idCategoriaCatalogo, int idPregunta, int idOpcionPadre, String tipoComponenteHtml, String comentarioRespuesta, String textoOpcion) {
         this.valorOpcion = valorOpcion;
         this.idCategoriaCatalogo = idCategoriaCatalogo;

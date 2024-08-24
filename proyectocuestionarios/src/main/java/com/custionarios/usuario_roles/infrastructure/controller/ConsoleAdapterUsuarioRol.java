@@ -79,7 +79,7 @@ public class ConsoleAdapterUsuarioRol {
                         String iduser = JOptionPane.showInputDialog(null, "Escriba el id del usuario: ");
                         int idusers = Integer.parseInt(iduser);
                         delUR.execute(idroles, idusers);
-                        
+                        Start();
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(null,  "problemas en el ingreso de datos,Vuelve a intentarlo");
                         Start();

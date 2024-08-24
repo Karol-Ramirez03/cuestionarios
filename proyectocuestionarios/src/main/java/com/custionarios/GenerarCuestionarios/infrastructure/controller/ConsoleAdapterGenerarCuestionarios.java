@@ -27,18 +27,7 @@ import com.custionarios.GenerarCuestionarios.domain.entity.GenerarCuestionarios;
 import com.custionarios.GenerarCuestionarios.domain.service.GenerarCuestionariosService;
 import com.custionarios.GenerarCuestionarios.infrastructure.repository.GenerarCuestionariosRepository;
 
-// ingresa cuestionario
-/**
- * ingresa capitulo 
- * seleciona pregunta 
- * if retorna id de la pregunta 
- * con la funcion mostrar pregunta pasa el id y muestra la pregunta para contestarla 
- * la siguiente automaticamente mostrar pregunta de seleccion pregunta
- * sus opciones 
- * y si no responde pregunta a normal
- * mostra pregunta 
- * sus opciones y subopciones
- */
+
 
 public class ConsoleAdapterGenerarCuestionarios {
     private GenerarCuestionariosService generarCuestionariosService;
@@ -275,6 +264,7 @@ public class ConsoleAdapterGenerarCuestionarios {
                                     int idSub = subopcion.get();
                                     int idSubopcion = retornarSubValor.execute(idopcion, idSub);
                                     guardarSubOpcion.execute(idSubopcion);
+                                    Start();
                                     //logica para guardar subopcion "esto retorna el numero"
                                     /*
                                      * 
@@ -289,10 +279,12 @@ public class ConsoleAdapterGenerarCuestionarios {
                                         // guardar opcion de tipo id 
                                         String respuestaABIERTA = JOptionPane.showInputDialog(null,"escriba su respuesta");
                                         guardarOpcionAbierta.execute(idopcion, respuestaABIERTA);
+                                        Start();
 
                                     }
                                     //LE PASO ID "OPCION " SI OPCION ES NULL O VACIA RETORNA TRUE Y HABRE UN INPUT
                                     guardarOpcion.execute(idopcion);
+                                    Start();
 
                                 }
                             
@@ -307,9 +299,7 @@ public class ConsoleAdapterGenerarCuestionarios {
             }
             
         } else{
-            // logicaa de buscar subopciones 
-            // logica de guardar opcion 
-            //creo que no nesecita logica
+            Start();
             return;
         }
 
@@ -320,7 +310,7 @@ public class ConsoleAdapterGenerarCuestionarios {
         int idencuesta = imprimircuestionarios();
         if (idencuesta == 0) {
             System.out.println("Saliendo del programa...");
-            return; // Salida del método Start
+            return; 
         }else{
             int numerocap = imprimircapitulos(idencuesta);
             if (numerocap == 0 ) {
@@ -334,9 +324,7 @@ public class ConsoleAdapterGenerarCuestionarios {
                 return; 
             } if (numeroPreg == -1) {
                 Start();
-            } else {
-
-            }
+            } 
             Optional<Integer> numeroopc = imprimiropciones(numerocap, numeroPreg, idencuesta);
             if (numeroopc.isPresent()) {
                 int valoropcion = numeroopc.get(); //me da el numero de opcion
@@ -347,6 +335,7 @@ public class ConsoleAdapterGenerarCuestionarios {
                     int SubOpcion = valorSubOpcion.get();   
                     int idSub = retornarSubOpcion.execute(idencuesta, numerocap, numeroPreg, valoropcion, SubOpcion);//EL ID DE LA SUBOPCION
                     guardarSubOpcion.execute(idSub);
+                    Start();
 
                     //guardar subopcion
 
@@ -363,9 +352,11 @@ public class ConsoleAdapterGenerarCuestionarios {
                                 // guardar opcion de tipo id 
                                 String respuestaABIERTA = JOptionPane.showInputDialog(null,"escriba su respuesta");
                                 guardarOpcionAbierta.execute(opcion, respuestaABIERTA);
+                                Start();
 
                             }
                             guardarOpcion.execute(opcion);
+                            Start();
                             //logicca de guardar 
                             //LE PASO ID "OPCION " SI OPCION ES NULL O VACIA RETORNA TRUE Y HABRE UN INPUT
                         }

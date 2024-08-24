@@ -12,7 +12,14 @@ public class SubOpcionesRespuesta {
     private String textoSubopcion;
 
 
-    public SubOpcionesRespuesta() {
+    
+
+
+
+    public SubOpcionesRespuesta(int idOpcionRespuesta, String componenteHtml, String textoSubopcion) {
+        this.idOpcionRespuesta = idOpcionRespuesta;
+        this.componenteHtml = componenteHtml;
+        this.textoSubopcion = textoSubopcion;
     }
 
 

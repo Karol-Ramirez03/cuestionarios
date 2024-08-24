@@ -2,6 +2,8 @@ package com.custionarios.iuUsuarios;
 
 import java.util.Optional;
 
+import javax.swing.JOptionPane;
+
 import com.custionarios.capitulos.infrastructure.controller.ConsoleAdapterCapitulo;
 import com.custionarios.categoriasCatalogo.infrastructure.controller.ConsoleAdapterCategoriasCatalogo;
 import com.custionarios.encuestas.infrastructure.controller.ConsoleAdapterEncuesta;
@@ -28,8 +30,9 @@ public class menuAdministracion {
                     8. Administrar Encuestas
                     9. Administrar Categorias
                     10. Administrar Capitulos
+                    11. salir
                     """;
-        Optional<Integer> opcion = Validaciones.mostrarOpciones(opciones,1,10);
+        Optional<Integer> opcion = Validaciones.mostrarOpciones(opciones,1,11);
 
         if (opcion.isPresent()) {
             int numero = opcion.get();
@@ -41,50 +44,58 @@ public class menuAdministracion {
             case 1:
                 ConsoleAdapterUsuario menuClientes = new ConsoleAdapterUsuario();
                 menuClientes.Start();
+                Start();
                 break;
 
             case 2:
                 ConsoleAdapterUsuarioRol menuUsuarioRol = new ConsoleAdapterUsuarioRol();
                 menuUsuarioRol.Start();
+                Start();
                 break;
             case 3:
                 ConsoleAdapterRoles menuRoles = new ConsoleAdapterRoles();
                 menuRoles.Start();
-                
+                Start();
                 break;
             case 4:
                 ConsoleAdapterSubOpcionesRespuesta menuSubOpciones = new ConsoleAdapterSubOpcionesRespuesta();
                 menuSubOpciones.Start();
+                Start();
                 break;
             case 5:
                 ConsoleAdapterRespuesta menuRespuesta = new ConsoleAdapterRespuesta();
                 menuRespuesta.Start();
+                Start();
                 
                 break;
             case 6:
                 ConsoleAdapterPregunta menuPregunta = new ConsoleAdapterPregunta();
                 menuPregunta.Start();
+                Start();
                 break;
             case 7:
                 ConsoleAdapterOpcionesRespuesta menuOpcionesRespuesta = new ConsoleAdapterOpcionesRespuesta();
                 menuOpcionesRespuesta.Start();
-                
+                Start();
                 break;
             case 8:
                 ConsoleAdapterEncuesta menuEncuesta = new ConsoleAdapterEncuesta();
                 menuEncuesta.Start();
-
+                Start();
                 break;
             case 9:
                 ConsoleAdapterCategoriasCatalogo menuCatalogo = new ConsoleAdapterCategoriasCatalogo();
                 menuCatalogo.Start();
-                
+                Start();
                 break;
             case 10:
                 ConsoleAdapterCapitulo menuCapitulo = new ConsoleAdapterCapitulo();
                 menuCapitulo.Start();
-
+                Start();
                 
+                break;
+            case 11:
+                JOptionPane.showMessageDialog(null, "Saliendo Del Programa");
                 break;
         
             default:
