@@ -10,14 +10,14 @@ public class OpcionesRespuesta {
     private int idPregunta;
     private Timestamp creadoEn;
     private Timestamp actualizadoEn;
-    private int idOpcionPadre; 
+    private Integer idOpcionPadre; 
     private String tipoComponenteHtml;
     private String comentarioRespuesta;
     private String textoOpcion;
 
     
 
-    public OpcionesRespuesta(int idCategoriaCatalogo, int idPregunta, int idOpcionPadre, String tipoComponenteHtml,
+    public OpcionesRespuesta(int idCategoriaCatalogo, int idPregunta, Integer idOpcionPadre, String tipoComponenteHtml,
             String comentarioRespuesta, String textoOpcion) {
         this.idCategoriaCatalogo = idCategoriaCatalogo;
         this.idPregunta = idPregunta;
@@ -29,7 +29,7 @@ public class OpcionesRespuesta {
 
 
 
-    public OpcionesRespuesta(int valorOpcion, int idCategoriaCatalogo, int idPregunta, int idOpcionPadre, String tipoComponenteHtml, String comentarioRespuesta, String textoOpcion) {
+    public OpcionesRespuesta(int valorOpcion, int idCategoriaCatalogo, int idPregunta, Integer idOpcionPadre, String tipoComponenteHtml, String comentarioRespuesta, String textoOpcion) {
         this.valorOpcion = valorOpcion;
         this.idCategoriaCatalogo = idCategoriaCatalogo;
         this.idPregunta = idPregunta;
@@ -56,7 +56,7 @@ public class OpcionesRespuesta {
 
 
     public OpcionesRespuesta(int id, int valorOpcion, int idCategoriaCatalogo, int idPregunta, Timestamp creadoEn,
-            Timestamp actualizadoEn, int idOpcionPadre, String tipoComponenteHtml, String comentarioRespuesta,
+            Timestamp actualizadoEn, Integer idOpcionPadre, String tipoComponenteHtml, String comentarioRespuesta,
             String textoOpcion) {
         this.id = id;
         this.valorOpcion = valorOpcion;
@@ -178,13 +178,13 @@ public class OpcionesRespuesta {
 
 
 
-    public int getIdOpcionPadre() {
+    public Integer getIdOpcionPadre() {
         return idOpcionPadre;
     }
 
 
 
-    public void setIdOpcionPadre(int idOpcionPadre) {
+    public void setIdOpcionPadre(Integer idOpcionPadre) {
         this.idOpcionPadre = idOpcionPadre;
     }
 

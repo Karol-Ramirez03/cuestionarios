@@ -61,30 +61,37 @@ public class ConsoleAdapterOpcionesRespuesta {
             case 1:
             
             try {
-
                 int idCategoriaCatalogo = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el id de Categoria Catalogo: "));
                 int idPregunta = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el id de la Pregunta relacionada: "));
+                
                 Integer idOpcionPadre = null;
                 String idOpcionPadreStr = JOptionPane.showInputDialog(null, "Escriba el id Opcion Padre (opcional /enter para continuar): ");
                 if (idOpcionPadreStr != null && !idOpcionPadreStr.trim().isEmpty()) {
-                    idOpcionPadre = Integer.parseInt(idOpcionPadreStr);
-                    
+                    try {
+                        idOpcionPadre = Integer.parseInt(idOpcionPadreStr);
+                    } catch (NumberFormatException e) {
+                        JOptionPane.showMessageDialog(null, "Error al ingresar id Opcion Padre. Debe ser un número entero.");
+                        e.printStackTrace();
+                        Start();
+                        return;
+                    }
                 }
-                String tipoComponenteHtml = JOptionPane.showInputDialog(null, "Escriba el tipo de Componente Html: ");
-                String comentarioRespuesta = JOptionPane.showInputDialog(null, "Escriba el texto de la Opcion: ");
-                String textoOpcion = JOptionPane.showInputDialog(null, "Escriba tu respuesta: ");
-
                 
-                OpcionesRespuesta respuesta = new OpcionesRespuesta(idCategoriaCatalogo,idPregunta,idOpcionPadre,tipoComponenteHtml,comentarioRespuesta,textoOpcion);
+                String tipoComponenteHtml = JOptionPane.showInputDialog(null, "Escriba el tipo de Componente Html: ");
+                String comentarioRespuesta = JOptionPane.showInputDialog(null, "Escriba el comentario de la Opcion: ");
+                String textoOpcion = JOptionPane.showInputDialog(null, "Escriba el texto de la opcion: ");
+                
+                OpcionesRespuesta respuesta = new OpcionesRespuesta(idCategoriaCatalogo, idPregunta, idOpcionPadre, tipoComponenteHtml, comentarioRespuesta, textoOpcion);
                 creatOR.execute(respuesta);
                 Start();
                 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null,  "problemas en el ingreso de datos,Vuelve a intentarlo");
+                JOptionPane.showMessageDialog(null, "Problemas en el ingreso de datos. Vuelve a intentarlo.");
+                e.printStackTrace();
                 Start();
             }
-
-                break;
+            break;
+    
             case 2:
                 try {
                     String iddel = JOptionPane.showInputDialog(null, "Escriba el id de la Opcion de Respuesta para eliminar: ");
@@ -222,17 +229,26 @@ public class ConsoleAdapterOpcionesRespuesta {
                                 }
                                 break;
                             case 3:
-                                try {
-                                    Integer idOpcionPadre = null;
-                                    String idOpcionPadreStr = JOptionPane.showInputDialog(null, "Escriba el id Opcion Padre (opcional /enter para continuar): ");
-                                    if (idOpcionPadreStr != null && !idOpcionPadreStr.trim().isEmpty()) {
+                            try {
+                                Integer idOpcionPadre = null;
+                                String idOpcionPadreStr = JOptionPane.showInputDialog(null, "Escriba el id Opcion Padre (opcional /enter para continuar): ");
+                                
+                                if (idOpcionPadreStr != null && !idOpcionPadreStr.trim().isEmpty()) {
+                                    try {
                                         idOpcionPadre = Integer.parseInt(idOpcionPadreStr);
+                                    } catch (Exception e) {
+                                        JOptionPane.showMessageDialog(null, "El ID Opción Padre debe ser un número válido.");
+                                        Start();
+                                        return; 
                                     }
-                                    RespuestaUpd.setIdOpcionPadre(idOpcionPadre);
-                                } catch (Exception e) {
-                                    JOptionPane.showMessageDialog(null,  "problemas en el ingreso de datos,Vuelve a intentarlo");
-                                    Start();
                                 }
+                                
+                                RespuestaUpd.setIdOpcionPadre(idOpcionPadre);
+                                
+                            } catch (Exception e) {
+                                JOptionPane.showMessageDialog(null, "Problemas en el ingreso de datos, vuelve a intentarlo.");
+                                Start();
+                            }
                                 break;
                             case 4:
                                 RespuestaUpd.setTipoComponenteHtml(JOptionPane.showInputDialog(null, "Ingrese el nuevo tipo de Componente Html"));

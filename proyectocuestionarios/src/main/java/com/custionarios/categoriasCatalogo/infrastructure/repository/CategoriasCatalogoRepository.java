@@ -22,7 +22,7 @@ public class CategoriasCatalogoRepository implements CategoriasCatalogoService {
         String sql = "INSERT INTO categorias_catalogo (creado_en, actualizado_en, nombre) VALUES (NOW(),NOW(),?)";
         try (Connection con = database.getConnection();
         PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(2, categoriasCatalogo.getNombre());
+            ps.setString(1, categoriasCatalogo.getNombre());
 
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null,  "CategoriasCatalogo agregado con exito");
@@ -86,7 +86,7 @@ public class CategoriasCatalogoRepository implements CategoriasCatalogoService {
 
     @Override
     public void deleteCategoriasCatalogo(int id) {
-        String sql = "DELETE FROM CategoriasCatalogo WHERE id = ?";
+        String sql = "DELETE FROM categorias_catalogo WHERE id = ?";
         try (Connection con = database.getConnection();
         PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, id);

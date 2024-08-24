@@ -24,7 +24,12 @@ public class OpcionesRespuestaRepository implements OpcionesRespuestaService{
         PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, opcionesRespuesta.getIdPregunta());
             ps.setInt(2, opcionesRespuesta.getIdCategoriaCatalogo());
-            ps.setInt(3, opcionesRespuesta.getIdOpcionPadre());
+            if (opcionesRespuesta.getIdOpcionPadre() != null) {
+                ps.setInt(3, opcionesRespuesta.getIdOpcionPadre());
+            } else {
+                ps.setNull(3, java.sql.Types.INTEGER);
+                //forma de asignar valores nulos
+            }
             ps.setString(4, opcionesRespuesta.getTipoComponenteHtml());
             ps.setString(5, opcionesRespuesta.getComentarioRespuesta());
             ps.setString(6, opcionesRespuesta.getTextoOpcion());
@@ -128,7 +133,13 @@ public class OpcionesRespuestaRepository implements OpcionesRespuestaService{
             ps.setInt(1, opcionesRespuesta.getId());
             ps.setInt(2, opcionesRespuesta.getIdPregunta());
             ps.setInt(3, opcionesRespuesta.getIdCategoriaCatalogo());
-            ps.setInt(4, opcionesRespuesta.getIdOpcionPadre());
+            System.out.println(opcionesRespuesta.getIdOpcionPadre());
+            if (opcionesRespuesta.getIdOpcionPadre() == 0) {
+
+                ps.setNull(4, java.sql.Types.INTEGER);
+            } else {
+                ps.setInt(4, opcionesRespuesta.getIdOpcionPadre());
+            }
             ps.setString(5, opcionesRespuesta.getTipoComponenteHtml());
             ps.setString(6, opcionesRespuesta.getComentarioRespuesta());
             ps.setString(7, opcionesRespuesta.getTextoOpcion());
