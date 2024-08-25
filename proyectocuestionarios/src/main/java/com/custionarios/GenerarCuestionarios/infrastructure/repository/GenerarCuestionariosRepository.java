@@ -107,7 +107,7 @@ public class GenerarCuestionariosRepository implements GenerarCuestionariosServi
             while (rs.next()) {
                 int numero_pregunta = rs.getInt("valor_opcion");
                 String texto_pregunta = rs.getString("texto_opcion");
-                 
+                
                 GenerarCuestionarios capitulo = new GenerarCuestionarios(numero_pregunta, texto_pregunta);
                 capitulos.add(capitulo);
             }

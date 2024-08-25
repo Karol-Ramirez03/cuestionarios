@@ -35,7 +35,8 @@ INSERT INTO categorias_catalogo (creado_en, actualizado_en, nombre) VALUES
 ('2024-12-20', '2024-12-20', 'Escala de nivel de estrés'),
 ('2024-09-01', '2024-09-01', 'presencia de enfermedades cronica'),
 ('2024-09-01', '2024-09-01', 'regularidad del Sueño'),
-('2024-09-01', '2024-09-01', 'Antecedentes medicos');
+('2024-09-01', '2024-09-01', 'Antecedentes medicos'),
+('2024-09-01', '2024-09-01', 'problemas alimenticios');
 
 
 INSERT INTO encuestas (creado_en, actualizado_en, descripcion, nombre) VALUES 
@@ -137,6 +138,7 @@ INSERT INTO opciones_respuesta (valor_opcion, id_categoria_catalogo, id_pregunta
 (4, 6, 9, '2024-12-20', '2024-12-30', 'radio', 'Escala de nivel de estrés', 'Muy alto');
 
 INSERT INTO opciones_respuesta (valor_opcion, id_categoria_catalogo, id_pregunta, creado_en, actualizado_en, tipo_componente_html, id_opcion_padre , comentario_respuesta, texto_opcion) VALUES
+(1, 10, 8, '2024-09-01', '2024-09-15', 'radio', NULL, 'Escala de actividad física', NULL),
 (1, 9, 1, '2024-09-01', '2024-09-15', 'radio', NULL, 'Escala de actividad física', NULL),
 (3, 7, 4, '2024-09-01', '2024-09-15', 'radio', 32, 'Escala de salud', 'nose');
 
