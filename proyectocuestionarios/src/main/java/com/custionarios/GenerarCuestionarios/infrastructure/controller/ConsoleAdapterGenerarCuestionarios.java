@@ -265,12 +265,7 @@ public class ConsoleAdapterGenerarCuestionarios {
                                     int idSubopcion = retornarSubValor.execute(idopcion, idSub);
                                     guardarSubOpcion.execute(idSubopcion);
                                     Start();
-                                    //logica para guardar subopcion "esto retorna el numero"
-                                    /*
-                                     * 
-                                     *
-                                     * */
-
+                                    
                                     
                                 } else {
                                     //idopcion logica guardar
@@ -282,7 +277,7 @@ public class ConsoleAdapterGenerarCuestionarios {
                                         Start();
 
                                     }
-                                    //LE PASO ID "OPCION " SI OPCION ES NULL O VACIA RETORNA TRUE Y HABRE UN INPUT
+                                    //LE PASO ID "OPCION " SI OPCION ES NULL O VACIA RETORNA TRUE Y ABRE UN INPUT
                                     guardarOpcion.execute(idopcion);
                                     Start();
 
