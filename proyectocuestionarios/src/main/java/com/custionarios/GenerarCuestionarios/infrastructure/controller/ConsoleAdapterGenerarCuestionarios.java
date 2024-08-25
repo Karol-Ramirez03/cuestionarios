@@ -326,6 +326,7 @@ public class ConsoleAdapterGenerarCuestionarios {
                 Start();
             } 
             Optional<Integer> numeroopc = imprimiropciones(numerocap, numeroPreg, idencuesta);
+            System.out.println(numeroopc);
             if (numeroopc.isPresent()) {
                 int valoropcion = numeroopc.get(); //me da el numero de opcion
                 //si valor opcion es 
@@ -367,9 +368,11 @@ public class ConsoleAdapterGenerarCuestionarios {
                 }
                 ImprimirPreguntasHijas(idencuesta, numerocap, numeroPreg,valoropcion);
                 
+            } else{
+                Start();
             }
          }
-    }
+    } 
 }
 
         
