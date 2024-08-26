@@ -40,10 +40,11 @@ INSERT INTO categorias_catalogo (creado_en, actualizado_en, nombre) VALUES
 
 
 INSERT INTO encuestas (creado_en, actualizado_en, descripcion, nombre) VALUES 
-('2024-09-01', '2024-09-15', 'Encuesta sobre salud', 'Encuesta de Salud'),
+('2024-09-01', '2024-09-15', 'Encuesta sobre salud', 'Encuesta de actividad fisica'),
 ('2024-10-01', '2024-10-20', 'Encuesta sobre hábitos', 'Encuesta de Hábitos'),
 ('2024-12-01', '2024-12-15', 'Encuesta sobre alimentación', 'Encuesta de Alimentación'),
 ('2024-12-20', '2024-12-30', 'Encuesta sobre bienestar', 'Encuesta de Bienestar');
+
 
 
 INSERT INTO capitulos (id_encuesta, creado_en, actualizado_en, numero_capitulo, titulo_capitulo) VALUES

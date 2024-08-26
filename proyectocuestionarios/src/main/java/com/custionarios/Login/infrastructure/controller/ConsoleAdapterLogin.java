@@ -53,7 +53,7 @@ public class ConsoleAdapterLogin {
                 }
                 if (habilitado == false) {
                     JOptionPane.showMessageDialog(null,"Lo siento, no estas Habilitado");
-                    
+                    Start();
                 } 
             }
 
