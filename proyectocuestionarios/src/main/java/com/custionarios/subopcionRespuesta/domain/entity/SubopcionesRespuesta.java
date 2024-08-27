@@ -1,7 +1,7 @@
 package com.custionarios.subopcionRespuesta.domain.entity;
 
 import java.sql.Timestamp;
-
+// arreglando el nombre archivo
 public class SubOpcionesRespuesta {
     private int id;
     private int numeroSubopcion;
