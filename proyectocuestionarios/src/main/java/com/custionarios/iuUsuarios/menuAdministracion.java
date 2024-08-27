@@ -10,6 +10,7 @@ import com.custionarios.encuestas.infrastructure.controller.ConsoleAdapterEncues
 import com.custionarios.funciones.Validaciones;
 import com.custionarios.opcionesRespuestas.infrastructure.controller.ConsoleAdapterOpcionesRespuesta;
 import com.custionarios.preguntas.infrastructure.controller.ConsoleAdapterPregunta;
+import com.custionarios.reportes.infrastructure.controller.ConsoleAdapterReportes;
 import com.custionarios.respuesta.infrastructure.controller.ConsoleAdapterRespuesta;
 import com.custionarios.roles.infrastructure.controller.ConsoleAdapterRoles;
 import com.custionarios.subopcionRespuesta.infrastruture.controller.ConsoleAdapterSubOpcionesRespuesta;
@@ -30,9 +31,10 @@ public class menuAdministracion {
                     8. Administrar Encuestas
                     9. Administrar Categorias
                     10. Administrar Capitulos
-                    11. salir
+                    11. Ver Reportes
+                    12. salir
                     """;
-        Optional<Integer> opcion = Validaciones.mostrarOpciones(opciones,1,11);
+        Optional<Integer> opcion = Validaciones.mostrarOpciones(opciones,1,12);
 
         if (opcion.isPresent()) {
             int numero = opcion.get();
@@ -95,6 +97,11 @@ public class menuAdministracion {
                 
                 break;
             case 11:
+                ConsoleAdapterReportes reportes = new ConsoleAdapterReportes();
+                reportes.Start();
+                Start();
+                break;
+            case 12:
                 JOptionPane.showMessageDialog(null, "Saliendo Del Programa");
                 break;
         

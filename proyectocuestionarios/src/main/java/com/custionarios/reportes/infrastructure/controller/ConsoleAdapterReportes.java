@@ -15,7 +15,7 @@ import com.custionarios.reportes.domain.service.ReportesService;
 import com.custionarios.reportes.infrastructure.ReportesRepository.ReportesRepository;
 
 public class ConsoleAdapterReportes {
-    private boolean bandera;
+    private Boolean bandera;
     private ReportesService reportesService;
     private ListarEncuestasUseCase listarEncuestas;
     private MostrarOpcionesSubopcionesUseCase mostrarReportes;
@@ -71,6 +71,8 @@ public class ConsoleAdapterReportes {
 
             st.append(id).append(" - ").append(nombre).append("\n");
         }
+        st.append(listaEncuesta.size() + 1).append(" - ").append("salir").append("\n");
+
         while (bandera) { 
             String opcionstr = JOptionPane.showInputDialog(null,st);
             int idEncuesta = validarnumeros(listaEncuesta.size() + 1, opcionstr); 

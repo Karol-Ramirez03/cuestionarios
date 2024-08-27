@@ -11,9 +11,7 @@ import com.custionarios.Login.application.ValidarLoginUseCase;
 import com.custionarios.Login.domain.entity.Login;
 import com.custionarios.Login.domain.service.LoginService;
 import com.custionarios.Login.infrastructure.repository.LoginRepository;
-import com.custionarios.funciones.Validaciones;
 import com.custionarios.iuUsuarios.menuAdministracion;
-import com.custionarios.reportes.infrastructure.controller.ConsoleAdapterReportes;
 
 public class ConsoleAdapterLogin {
     private LoginService loginService;
@@ -49,34 +47,13 @@ public class ConsoleAdapterLogin {
                     
                 } 
                 if (rol != 1 && habilitado == true) {
-                    String menu = """
-                            1. ver reportes
-                            2. hacer Encuestas
-                            3. salir
-                            """;
-                    Optional<Integer> opciones = Validaciones.mostrarOpciones(menu, 1, 3);
-                    if (opciones.isPresent()) {
-                        int opcion = opciones.get();
-                        switch (opcion) {
-                            case 1:
-                                ConsoleAdapterReportes reportes = new ConsoleAdapterReportes();
-                                reportes.Start();
-                                
-                                break;
-                            case 2:
-                                ConsoleAdapterGenerarCuestionarios encuesta = new ConsoleAdapterGenerarCuestionarios();
-                                encuesta.Start();
-                                break;
-                            case 3:
-                                return;
-                            default:
-                                System.out.println("Opción no válida. Por favor, elija 1 o 2.");
-                        }
+                    ConsoleAdapterGenerarCuestionarios encuesta = new ConsoleAdapterGenerarCuestionarios();
+                    encuesta.Start();
                         
-                    }
-        
-        
                 }
+        
+        
+                
                 if (habilitado == false) {
                     JOptionPane.showMessageDialog(null,"Lo siento, no estas Habilitado");
                     Start();
