@@ -99,7 +99,7 @@ public class ConsoleAdapterGenerarCuestionarios {
             return -1;
         }
     }
-    // me retorna -1 o 0 si se presenta comflicto con la entrada y sale de ejecucion
+    // me retorna -1 o 0 si se presenta conflicto con la entrada y sale de ejecucion
 
     public int imprimircuestionarios(){
         StringBuilder st = new StringBuilder();
