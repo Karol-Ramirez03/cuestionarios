@@ -14,7 +14,7 @@ import com.custionarios.subopcionRespuesta.application.DeleteSubOpcionesRespuest
 import com.custionarios.subopcionRespuesta.application.FindAllSubOpcionesRespuestaUseCase;
 import com.custionarios.subopcionRespuesta.application.FindByIdSubOpcionesRespuestaUseCase;
 import com.custionarios.subopcionRespuesta.application.UpdateSubOpcionesRespuestaUseCase;
-import com.custionarios.subopcionRespuesta.domain.entity.SubOpcionesRespuesta;
+import com.custionarios.subopcionRespuesta.domain.entity.SubopcionesRespuesta;
 import com.custionarios.subopcionRespuesta.domain.service.SubOpcionesRespuestaService;
 import com.custionarios.subopcionRespuesta.infrastruture.repository.SubOpcionesRespuestaRepository;
 
@@ -64,7 +64,7 @@ public class ConsoleAdapterSubOpcionesRespuesta {
                     String componenteHtml = JOptionPane.showInputDialog(null, "Escriba el componente Html: ");
                     String textoSubopcion = JOptionPane.showInputDialog(null, "Escriba el texto de la Sub opcion: ");
 
-                    SubOpcionesRespuesta sor = new SubOpcionesRespuesta(idOpcionRespuesta, componenteHtml, textoSubopcion);
+                    SubopcionesRespuesta sor = new SubopcionesRespuesta(idOpcionRespuesta, componenteHtml, textoSubopcion);
                     createSOR.execute(sor);
                     Start();
                         
@@ -89,8 +89,8 @@ public class ConsoleAdapterSubOpcionesRespuesta {
                 break;
             case 3:
                 StringBuilder mensaje = new StringBuilder("Lista de sub opciones:\n");
-                List<SubOpcionesRespuesta> sor = allSOR.execute();
-                for (SubOpcionesRespuesta sortext : sor) {
+                List<SubopcionesRespuesta> sor = allSOR.execute();
+                for (SubopcionesRespuesta sortext : sor) {
                     int id = sortext.getId();
                     int numeroSubopcion = sortext.getNumeroSubopcion();
                     Timestamp creadoEn = sortext.getCreadoEn();
@@ -126,11 +126,11 @@ public class ConsoleAdapterSubOpcionesRespuesta {
                 try {
                     String iduser = JOptionPane.showInputDialog(null, "Escriba el id de la Sub opcion para buscar: ");
                     int iduserbu = Integer.parseInt(iduser);
-                    Optional<SubOpcionesRespuesta> dato = idSOR.execute(iduserbu);
+                    Optional<SubopcionesRespuesta> dato = idSOR.execute(iduserbu);
                     StringBuilder mensajeid = new StringBuilder("usuarios:\n");
 
                     if (dato.isPresent()) {
-                        SubOpcionesRespuesta sub = dato.get();
+                        SubopcionesRespuesta sub = dato.get();
                         int id = sub.getId();
                         int numeroSubopcion = sub.getNumeroSubopcion();
                         Timestamp creadoEn = sub.getCreadoEn();
@@ -164,8 +164,8 @@ public class ConsoleAdapterSubOpcionesRespuesta {
                 boolean bandera = true;
                 String idsub = JOptionPane.showInputDialog(null, "Escriba el id de la SubOpcion para buscar: ");
                 int idByupd = Integer.parseInt(idsub);
-                Optional<SubOpcionesRespuesta> dato = idSOR.execute(idByupd);
-                SubOpcionesRespuesta datoupd = dato.get();
+                Optional<SubopcionesRespuesta> dato = idSOR.execute(idByupd);
+                SubopcionesRespuesta datoupd = dato.get();
                 while (bandera) {
                     String opcionesUpd = """
                         1. id Opcion de Respuesta

@@ -2,7 +2,7 @@ package com.custionarios.subopcionRespuesta.application;
 
 import java.util.Optional;
 
-import com.custionarios.subopcionRespuesta.domain.entity.SubOpcionesRespuesta;
+import com.custionarios.subopcionRespuesta.domain.entity.SubopcionesRespuesta;
 import com.custionarios.subopcionRespuesta.domain.service.SubOpcionesRespuestaService;
 
 public class FindByIdSubOpcionesRespuestaUseCase {
@@ -12,7 +12,7 @@ public class FindByIdSubOpcionesRespuestaUseCase {
         this.subOpcionesRespuestaService = subOpcionesRespuestaService;
     }
 
-    public Optional<SubOpcionesRespuesta> execute(int id){
+    public Optional<SubopcionesRespuesta> execute(int id){
         return subOpcionesRespuestaService.FindByIdSubOpcionesRespuesta(id);
     }
 

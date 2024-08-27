@@ -11,13 +11,13 @@ import java.util.Optional;
 import javax.swing.JOptionPane;
 
 import com.custionarios.Database.database;
-import com.custionarios.subopcionRespuesta.domain.entity.SubOpcionesRespuesta;
+import com.custionarios.subopcionRespuesta.domain.entity.SubopcionesRespuesta;
 import com.custionarios.subopcionRespuesta.domain.service.SubOpcionesRespuestaService;
 
 public class SubOpcionesRespuestaRepository implements SubOpcionesRespuestaService{
 
     @Override
-    public void CreateSubOpcionesRespuesta(SubOpcionesRespuesta subOpcionesRespuesta) {
+    public void CreateSubOpcionesRespuesta(SubopcionesRespuesta subOpcionesRespuesta) {
         String sql = "CALL validarvalorsubopciones(?,?,?)";
         try (Connection con = database.getConnection();
         PreparedStatement ps = con.prepareStatement(sql)) {
@@ -35,9 +35,9 @@ public class SubOpcionesRespuestaRepository implements SubOpcionesRespuestaServi
     }
 
     @Override
-    public List<SubOpcionesRespuesta> FindAllSubOpcionesRespuesta() {
+    public List<SubopcionesRespuesta> FindAllSubOpcionesRespuesta() {
         String sql = "SELECT  id, numero_Subopcion, creado_en,  actualizado_en, id_opcion_respuesta, componente_html, texto_Subopcion FROM subopciones_respuesta";
-        List<SubOpcionesRespuesta> Sub = new ArrayList<>();
+        List<SubopcionesRespuesta> Sub = new ArrayList<>();
         try (Connection con = database.getConnection();
         PreparedStatement ps = con.prepareStatement(sql);
         ResultSet rs  = ps.executeQuery()) {
@@ -50,7 +50,7 @@ public class SubOpcionesRespuestaRepository implements SubOpcionesRespuestaServi
                 String componenteHtml = rs.getString("componente_html");
                 String textoSubopcion = rs.getString("texto_Subopcion");
 
-                SubOpcionesRespuesta opc = new SubOpcionesRespuesta(ID, numeroSubopcion, creadoEn, actualizadoEn, idOpcionRespuesta, componenteHtml, textoSubopcion);
+                SubopcionesRespuesta opc = new SubopcionesRespuesta(ID, numeroSubopcion, creadoEn, actualizadoEn, idOpcionRespuesta, componenteHtml, textoSubopcion);
                 Sub.add(opc);
             }
             
@@ -62,7 +62,7 @@ public class SubOpcionesRespuestaRepository implements SubOpcionesRespuestaServi
     }
 
     @Override
-    public Optional<SubOpcionesRespuesta> FindByIdSubOpcionesRespuesta(int id) {
+    public Optional<SubopcionesRespuesta> FindByIdSubOpcionesRespuesta(int id) {
         String sql = "SELECT  id, numero_Subopcion, creado_en,  actualizado_en, id_opcion_respuesta, componente_html, texto_Subopcion FROM subopciones_respuesta WHERE id = ?";
         try (Connection con = database.getConnection();
         PreparedStatement ps = con.prepareStatement(sql)) {
@@ -78,7 +78,7 @@ public class SubOpcionesRespuestaRepository implements SubOpcionesRespuestaServi
                 String componenteHtml = rs.getString("componente_html");
                 String textoSubopcion = rs.getString("texto_Subopcion");
 
-                SubOpcionesRespuesta opc = new SubOpcionesRespuesta(ID, numeroSubopcion, creadoEn, actualizadoEn, idOpcionRespuesta, componenteHtml, textoSubopcion);
+                SubopcionesRespuesta opc = new SubopcionesRespuesta(ID, numeroSubopcion, creadoEn, actualizadoEn, idOpcionRespuesta, componenteHtml, textoSubopcion);
                 return Optional.of(opc);
             }
             
@@ -103,7 +103,7 @@ public class SubOpcionesRespuestaRepository implements SubOpcionesRespuestaServi
     }
 
     @Override
-    public void updateSubOpcionesRespuesta(SubOpcionesRespuesta subOpcionesRespuesta) {
+    public void updateSubOpcionesRespuesta(SubopcionesRespuesta subOpcionesRespuesta) {
         String sql = "CALL actualizarSubopciones(?,?,?,?)";
         try (Connection con = database.getConnection();
             PreparedStatement ps = con.prepareStatement(sql)) {

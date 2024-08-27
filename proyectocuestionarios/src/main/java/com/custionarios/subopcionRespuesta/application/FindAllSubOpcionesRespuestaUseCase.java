@@ -2,7 +2,7 @@ package com.custionarios.subopcionRespuesta.application;
 
 import java.util.List;
 
-import com.custionarios.subopcionRespuesta.domain.entity.SubOpcionesRespuesta;
+import com.custionarios.subopcionRespuesta.domain.entity.SubopcionesRespuesta;
 import com.custionarios.subopcionRespuesta.domain.service.SubOpcionesRespuestaService;
 
 public class FindAllSubOpcionesRespuestaUseCase {
@@ -13,7 +13,7 @@ public class FindAllSubOpcionesRespuestaUseCase {
     }
 
     
-    public List<SubOpcionesRespuesta> execute(){
+    public List<SubopcionesRespuesta> execute(){
         return subOpcionesRespuestaService.FindAllSubOpcionesRespuesta();
     }
 }

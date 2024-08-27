@@ -1,6 +1,6 @@
 package com.custionarios.subopcionRespuesta.application;
 
-import com.custionarios.subopcionRespuesta.domain.entity.SubOpcionesRespuesta;
+import com.custionarios.subopcionRespuesta.domain.entity.SubopcionesRespuesta;
 import com.custionarios.subopcionRespuesta.domain.service.SubOpcionesRespuestaService;
 
 public class CreateSubOpcionesRespuestaUseCase {
@@ -10,7 +10,7 @@ public class CreateSubOpcionesRespuestaUseCase {
         this.subOpcionesRespuestaService = subOpcionesRespuestaService;
     }
 
-    public void execute(SubOpcionesRespuesta subOpcionesRespuesta){
+    public void execute(SubopcionesRespuesta subOpcionesRespuesta){
         subOpcionesRespuestaService.CreateSubOpcionesRespuesta(subOpcionesRespuesta);
 
     }

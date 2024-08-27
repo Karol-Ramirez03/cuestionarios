@@ -3,12 +3,12 @@ package com.custionarios.subopcionRespuesta.domain.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.custionarios.subopcionRespuesta.domain.entity.SubOpcionesRespuesta;
+import com.custionarios.subopcionRespuesta.domain.entity.SubopcionesRespuesta;
 
 public interface SubOpcionesRespuestaService {
-    public void CreateSubOpcionesRespuesta(SubOpcionesRespuesta subOpcionesRespuesta);
+    public void CreateSubOpcionesRespuesta(SubopcionesRespuesta subOpcionesRespuesta);
     public void deleteSubOpcionesRespuesta(int id);
-    public void updateSubOpcionesRespuesta(SubOpcionesRespuesta subOpcionesRespuesta);
-    public List<SubOpcionesRespuesta> FindAllSubOpcionesRespuesta();
-    public Optional<SubOpcionesRespuesta> FindByIdSubOpcionesRespuesta(int id);
+    public void updateSubOpcionesRespuesta(SubopcionesRespuesta subOpcionesRespuesta);
+    public List<SubopcionesRespuesta> FindAllSubOpcionesRespuesta();
+    public Optional<SubopcionesRespuesta> FindByIdSubOpcionesRespuesta(int id);
 }
