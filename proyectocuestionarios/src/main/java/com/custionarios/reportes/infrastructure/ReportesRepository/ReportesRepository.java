@@ -61,7 +61,7 @@ public class ReportesRepository implements ReportesService{
             LEFT JOIN respuestas sr ON sr.id_subrespuesta = so.id
             WHERE e.id = ?
             GROUP BY  p.texto_pregunta, o.texto_opcion, so.texto_subopcion,sr.texto_respuesta
-            ORDER BY p.texto_pregunta, o.texto_opcion, so.texto_subopcion
+
             
             
         """;
